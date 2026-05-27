@@ -1166,7 +1166,28 @@
             <option value="" disabled selected>Choisir Gouvernorat (الولاية)</option>
             <option value="Tunis">Tunis (تونس)</option><option value="Ariana">Ariana (أريانة)</option><option value="Ben Arous">Ben Arous (بن عروس)</option><option value="Manouba">Manouba (منوبة)</option><option value="Nabeul">Nabeul (نابل)</option><option value="Zaghouan">Zaghouan (زغوان)</option><option value="Bizerte">Bizerte (بنزرت)</option><option value="Beja">Béja (باجة)</option><option value="Jendouba">Jendouba (جندوبة)</option><option value="Le Kef">Le Kef (الكاف)</option><option value="Siliana">Siliana (سليانة)</option><option value="Sousse">Sousse (سوسة)</option><option value="Monastir">Monastir (المنستير)</option><option value="Mahdia">Mahdia (المهدية)</option><option value="Sfax">Sfax (صفاقس)</option><option value="Kairouan">Kairouan (القيروان)</option><option value="Kasserine">Kasserine (القصرين)</option><option value="Sidi Bouzid">Sidi Bouzid (سيدي بوزيد)</option><option value="Gabes">Gabès (قابس)</option><option value="Medenine">Médenine (مدنين)</option><option value="Tataouine">Tataouine (تطاوين)</option><option value="Gafsa">Gafsa (قفصة)</option><option value="Tozeur">Tozeur (توزر)</option><option value="Kebili">Kébili (قبلي)</option>
           </select>
-          <input type="text" name="Ville_Adresse" id="inputAddress" class="input-field" placeholder="Adresse complète (Rue, Cité, Ville)" required>
+          <textarea 
+name="Ville_Adresse" 
+id="inputAddress" 
+class="input-field"
+placeholder="أكتب عنوانك الكامل هنا"
+required>
+</textarea>
+
+<style>
+textarea.input-field{
+  width: 100%;
+  min-height: 120px;
+  padding: 16px;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  background-color: #fff;
+  resize: vertical;
+  font-family: 'Montserrat', 'Cairo', sans-serif;
+}
+</style>
         </div>
 
         <div style="background-color: #f0f7f4; padding: 15px; border-radius: 6px; border: 1px solid #d4edda; color: #155724; font-size: 12px; font-weight: 500; display: flex; align-items: center; gap: 10px;">
