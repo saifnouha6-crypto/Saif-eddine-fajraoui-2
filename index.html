@@ -1326,7 +1326,6 @@ textarea.input-field{
 <script>
 document.getElementById("finalOrderForm").addEventListener("submit", async function(e){
   e.preventDefault();
-  if(!validateCheckoutForm()) return;
 
   const nom = document.getElementById("inputName").value;
   const phone = document.getElementById("inputPhone").value;
