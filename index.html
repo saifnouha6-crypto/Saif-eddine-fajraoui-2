@@ -1328,19 +1328,20 @@ textarea.input-field{
 document.getElementById("finalOrderForm").addEventListener("submit", async function(e){
   e.preventDefault(); 
 
-  // 1. التحقق من البيانات
-  let name = document.getElementById('inputName').value.trim();
-  let phone = document.getElementById('inputPhone').value.trim();
-  let gov = document.getElementById('selectGouvernorat').value;
-  let address = document.getElementById('inputAddress').value.trim();
-  let total = document.getElementById('checkoutTotalDisplay').innerText;
+  // 1. جمع البيانات
+  const name = document.getElementById('inputName').value.trim();
+  const phone = document.getElementById('inputPhone').value.trim();
+  const gov = document.getElementById('selectGouvernorat').value;
+  const address = document.getElementById('inputAddress').value.trim();
+  const total = document.getElementById('checkoutTotalDisplay').innerText;
 
-  if(name.length < 5) { alert("Veuillez saisir votre nom complet."); return; }
-  if(phone.length !== 8 || isNaN(phone)) { alert("Erreur: Le numéro doit contenir 8 chiffres."); return; }
-  if(!gov) { alert("Veuillez sélectionner votre Gouvernorat."); return; }
-  if(address.length < 8) { alert("Veuillez préciser votre adresse."); return; }
+  // 2. التحقق من البيانات
+  if(name.length < 5 || phone.length !== 8 || !gov || address.length < 5) {
+      alert("Veuillez remplir tous les champs correctement.");
+      return;
+  }
 
-  // 2. إرسال الطلب
+  // 3. الإرسال
   const submitBtn = this.querySelector('button[type="submit"]');
   submitBtn.innerText = "Envoi en cours...";
   submitBtn.disabled = true;
@@ -1359,18 +1360,19 @@ document.getElementById("finalOrderForm").addEventListener("submit", async funct
     const json = await res.json();
     
     if(json.success) {
-      // 3. عرض رسالة نجاح مفصلة
       document.getElementById("checkoutView").innerHTML = `
-        <div style="padding:40px 25px;text-align:center;min-height:80vh;">
-          <div style="font-size: 50px; margin-bottom: 20px;">✅</div>
-          <h1>Merci !</h1>
-          <p>Votre commande a été envoyée avec succès.</p>
-          <div style="text-align:left; background:#f5f5f5; padding:15px; margin:20px 0;">
-            <p><b>Nom:</b> ${name}</p>
-            <p><b>Téléphone:</b> ${phone}</p>
-            <p><b>Total:</b> ${total}</p>
+        <div style="padding:40px 25px;text-align:center;min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+          <div style="background:#e8f5e9;width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:32px;">✅</div>
+          <h1 style="font-size:26px;margin-bottom:10px;">Commande confirmée !</h1>
+          <p style="font-size:15px;color:#555;margin-bottom:28px;">Votre commande a été envoyée avec succès.</p>
+          <div style="background:#f5f5f5;padding:25px;border-radius:10px;margin-bottom:28px;font-size:15px;line-height:2;text-align:left;width:100%;max-width:440px;">
+            <b>👤 Nom :</b> ${name}<br>
+            <b>📞 Téléphone :</b> ${phone}<br>
+            <b>📍 Gouvernorat :</b> ${gov}<br>
+            <b>🏠 Adresse :</b> ${address}<br>
+            <b>💰 Total :</b> ${total}
           </div>
-          <button onclick="location.reload()" style="background:black; color:white; padding:15px 30px; border:none; cursor:pointer;">RETOUR À L'ACCUEIL</button>
+          <button onclick="location.reload()" style="background:black;color:white;border:none;padding:16px 32px;font-size:14px;font-weight:700;border-radius:8px;cursor:pointer;">BACK TO STORE</button>
         </div>`;
     } else { 
       alert("Erreur lors de l'envoi."); 
