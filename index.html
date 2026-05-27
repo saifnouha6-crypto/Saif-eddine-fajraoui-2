@@ -3,21 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FAJRAOUI STORE | Boutique Officielle</title>
+<title>FAJRAOUI STORE | Boutique Officielle de Luxe</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
   :root {
     --bg-white: #ffffff;
-    --bg-light: #f6f6f6;
+    --bg-light: #f9f9f9;
+    --bg-dark-gray: #1a1a1a;
     --text-black: #000000;
     --text-muted: #666666;
+    --text-gold: #c5a880;
     --border-color: #e8e8e8;
+    --border-dark: #222222;
     --accent-color: #111111;
     --error-color: #d93838;
-    --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    --success-color: #27ae60;
+    --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    --shadow-subtle: 0 4px 20px rgba(0,0,0,0.04);
+    --shadow-medium: 0 10px 40px rgba(0,0,0,0.08);
   }
 
   * {
@@ -26,6 +32,7 @@
     box-sizing: border-box;
     font-family: 'Montserrat', 'Cairo', sans-serif;
     -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
   }
 
   body {
@@ -33,67 +40,116 @@
     color: var(--text-black);
     overflow-x: hidden;
     position: relative;
+    line-height: 1.6;
   }
 
-  /* ⚡ الشريط الإعلاني الأعلى */
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg-light);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--text-black);
+    border-radius: 3px;
+  }
+
+  /* ⚡ Announcement Bar Component */
   .announcement-bar {
     background-color: var(--text-black);
     color: var(--bg-white);
     font-size: 11px;
     font-weight: 600;
     text-align: center;
-    padding: 11px 20px;
-    letter-spacing: 1.5px;
+    padding: 12px 20px;
+    letter-spacing: 2px;
     text-transform: uppercase;
+    position: relative;
+    z-index: 101;
+    border-bottom: 1px solid var(--border-dark);
   }
 
-  /* 🔹 الهيدر الاحترافي الفاخر */
+  /* 🔹 Top Utility Contact Bar */
+  .top-contact-bar {
+    background-color: var(--bg-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 5%;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  .top-contact-left a, .top-contact-right a {
+    color: var(--text-black);
+    text-decoration: none;
+    margin-right: 15px;
+    transition: var(--transition-smooth);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .top-contact-left a:hover, .top-contact-right a:hover {
+    color: var(--text-muted);
+  }
+
+  /* 🔹 Premium Sticky Header */
   header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 22px 5%;
+    padding: 24px 5%;
     border-bottom: 1px solid var(--border-color);
     position: sticky;
     top: 0;
-    background-color: rgba(255, 255, 255, 0.90);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
     z-index: 100;
     transition: var(--transition-smooth);
+    box-shadow: var(--shadow-subtle);
   }
 
   .nav-left {
     display: flex;
     align-items: center;
-    gap: 25px;
+    gap: 30px;
   }
 
   .menu-toggle {
     background: none;
     border: none;
     color: var(--text-black);
-    font-size: 18px;
+    font-size: 20px;
     cursor: pointer;
     transition: var(--transition-smooth);
+    display: flex;
+    align-items: center;
   }
-  .menu-toggle:hover { opacity: 0.6; }
+  .menu-toggle:hover { transform: scale(1.1); }
 
   .logo {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 900;
-    letter-spacing: 4px;
+    letter-spacing: 5px;
     text-transform: uppercase;
     text-decoration: none;
     color: var(--text-black);
+    display: inline-flex;
+    align-items: center;
   }
   .logo span {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
-    color: var(--text-muted);
-    margin-left: 8px;
-    letter-spacing: 1.5px;
-    vertical-align: middle;
+    color: #4a7c59;
+    margin-left: 10px;
+    letter-spacing: 2px;
+    border: 1px solid #4a7c59;
+    padding: 2px 6px;
+    border-radius: 2px;
+    text-transform: uppercase;
   }
 
   .nav-right {
@@ -102,63 +158,85 @@
     gap: 25px;
   }
 
+  .nav-social-link {
+    color: var(--text-black);
+    font-size: 18px;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+  }
+  .nav-social-link:hover {
+    color: #e1306c;
+    transform: translateY(-2px);
+  }
+
   .cart-icon-btn {
     background: none;
     border: none;
     color: var(--text-black);
-    font-size: 19px;
+    font-size: 20px;
     cursor: pointer;
     position: relative;
     display: flex;
     align-items: center;
     transition: var(--transition-smooth);
   }
-  .cart-icon-btn:hover { opacity: 0.6; }
+  .cart-icon-btn:hover { opacity: 0.7; }
 
   .cart-count {
-    font-size: 13px;
-    font-weight: 600;
-    margin-left: 7px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-left: 8px;
     background-color: var(--text-black);
     color: var(--bg-white);
-    padding: 2px 8px;
-    border-radius: 12px;
-    min-width: 22px;
-    text-align: center;
+    padding: 3px 9px;
+    border-radius: 50%;
+    min-width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  /* 🔹 واجهة العرض الرئيسية للمتجر */
+  /* 🔹 UI Content Container Toggles */
   .main-store-view {
     display: block;
-    animation: fadeIn 0.6s ease;
+    animation: premiumFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .hero-section {
     text-align: center;
-    padding: 50px 5% 30px;
+    padding: 80px 5% 40px;
+    background: linear-gradient(to bottom, #fcfcfc, #ffffff);
   }
   .hero-section h1 {
-    font-size: 32px;
-    font-weight: 800;
-    letter-spacing: 3px;
+    font-size: 40px;
+    font-weight: 900;
+    letter-spacing: 6px;
     text-transform: uppercase;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
+    color: var(--text-black);
   }
   .hero-section p {
-    font-size: 12px;
-    letter-spacing: 2px;
+    font-size: 13px;
+    letter-spacing: 3px;
     color: var(--text-muted);
     text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 600;
+  }
+  .hero-divider {
+    width: 60px;
+    height: 2px;
+    background-color: var(--text-black);
+    margin: 20px auto 0;
   }
 
-  /* 🔹 شبكة المنتجات */
+  /* 🔹 Luxury Grid Layout for Products */
   .products-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    padding: 0 4% 80px;
-    max-width: 1200px;
+    gap: 24px;
+    padding: 20px 5% 80px;
+    max-width: 1300px;
     margin: 0 auto;
   }
 
@@ -167,59 +245,70 @@
     display: flex;
     flex-direction: column;
     position: relative;
+    border-radius: 8px;
+    transition: var(--transition-smooth);
   }
 
   .product-image-wrapper {
     width: 100%;
-    height: 250px;
+    height: 280px;
     background-color: var(--bg-light);
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    margin-bottom: 14px;
-    border-radius: 4px;
+    margin-bottom: 18px;
+    border-radius: 6px;
     position: relative;
+    border: 1px solid rgba(0,0,0,0.01);
+    box-shadow: var(--shadow-subtle);
   }
 
   .product-image-wrapper img {
-    max-width: 85%;
-    max-height: 85%;
+    max-width: 80%;
+    max-height: 80%;
     object-fit: contain;
     transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .product-card:hover .product-image-wrapper img {
-    transform: scale(1.06);
+    transform: scale(1.08);
+  }
+
+  .product-info-box {
+    padding: 5px 2px;
   }
 
   .product-title {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
-    color: #111;
-    margin-bottom: 5px;
+    color: #111111;
+    margin-bottom: 6px;
     letter-spacing: 0.5px;
     text-transform: uppercase;
     line-height: 1.4;
   }
 
   .product-price {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     color: var(--text-black);
-    margin-bottom: 12px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   .add-to-cart-btn {
     background: none;
     border: none;
     color: var(--text-black);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 2px;
     text-align: left;
     cursor: pointer;
-    padding: 4px 0;
+    padding: 6px 0;
     border-bottom: 2px solid var(--text-black);
     width: fit-content;
     transition: var(--transition-smooth);
@@ -227,23 +316,157 @@
   .add-to-cart-btn:hover {
     color: var(--text-muted);
     border-color: var(--text-muted);
-    padding-left: 4px;
+    padding-left: 6px;
   }
 
-  /* 🔹 لوحة العربة الجانبية الاحترافية الفاخرة */
+  /* 🔹 Premium Features Grid Section */
+  .brand-features-section {
+    background-color: var(--bg-light);
+    padding: 60px 5%;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+  }
+  .features-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+  .feature-item-box {
+    text-align: center;
+    padding: 20px;
+  }
+  .feature-item-box i {
+    font-size: 28px;
+    color: var(--text-black);
+    margin-bottom: 15px;
+  }
+  .feature-item-box h4 {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+  }
+  .feature-item-box p {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* 🔹 Customer Testimonials Component */
+  .reviews-section-wrapper {
+    padding: 80px 5%;
+    background-color: var(--bg-white);
+    text-align: center;
+  }
+  .section-headline {
+    font-size: 22px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 40px;
+  }
+  .reviews-container-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .review-card-element {
+    background-color: var(--bg-light);
+    padding: 30px;
+    border-radius: 6px;
+    text-align: left;
+    box-shadow: var(--shadow-subtle);
+    border: 1px solid var(--border-color);
+  }
+  .review-stars {
+    color: #f1c40f;
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  .review-text-content {
+    font-size: 13px;
+    color: #333;
+    font-style: italic;
+    margin-bottom: 15px;
+  }
+  .review-author-info {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .review-author-info span {
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  /* 🔹 FAQ Interactive Accordion Component */
+  .faq-section-wrapper {
+    padding: 60px 5% 100px;
+    background-color: var(--bg-white);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .faq-accordion-container {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  .faq-item-row {
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: var(--transition-smooth);
+  }
+  .faq-trigger-btn {
+    width: 100%;
+    background-color: var(--bg-light);
+    padding: 20px;
+    text-align: left;
+    border: none;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .faq-panel-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+    background-color: var(--bg-white);
+  }
+  .faq-panel-content p {
+    padding: 20px;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* 🔹 Premium Cart Sidebar Sliding Panel */
   .cart-sidebar {
     position: fixed;
     top: 0;
     right: -100%;
     width: 100%;
-    max-width: 440px;
+    max-width: 460px;
     height: 100%;
     background-color: var(--bg-white);
-    box-shadow: -20px 0 50px rgba(0,0,0,0.15);
+    box-shadow: -25px 0 60px rgba(0,0,0,0.12);
     z-index: 1000;
     display: flex;
     flex-direction: column;
-    transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: right 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .cart-sidebar.active { right: 0; }
 
@@ -251,53 +474,54 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 30px 24px;
+    padding: 35px 28px;
     border-bottom: 1px solid var(--border-color);
   }
   .cart-header h2 {
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 19px;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
   }
   .cart-close {
     background: none;
     border: none;
-    font-size: 26px;
+    font-size: 28px;
     cursor: pointer;
     color: var(--text-black);
     transition: var(--transition-smooth);
   }
-  .cart-close:hover { opacity: 0.5; }
+  .cart-close:hover { transform: rotate(90deg); opacity: 0.6; }
 
   .cart-items-container {
     flex-grow: 1;
     overflow-y: auto;
-    padding: 24px;
+    padding: 28px;
   }
 
   .cart-item {
     display: flex;
-    gap: 16px;
-    margin-bottom: 24px;
+    gap: 18px;
+    margin-bottom: 26px;
     position: relative;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #f9f9f9;
-    animation: slideInShort 0.4s ease;
+    padding-bottom: 22px;
+    border-bottom: 1px solid #fcfcfc;
+    animation: itemSlideIn 0.4s ease-out;
   }
 
   .cart-item-img {
-    width: 80px;
-    height: 95px;
+    width: 85px;
+    height: 100px;
     background-color: var(--bg-light);
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 4px;
+    box-shadow: var(--shadow-subtle);
   }
   .cart-item-img img {
-    max-width: 85%;
-    max-height: 85%;
+    max-width: 80%;
+    max-height: 80%;
     object-fit: contain;
   }
 
@@ -311,16 +535,18 @@
   .cart-item-title {
     font-size: 13px;
     font-weight: 600;
-    padding-right: 25px;
+    padding-right: 30px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    line-height: 1.4;
   }
 
   .cart-item-size {
     font-size: 11px;
     color: var(--text-muted);
-    margin-top: 3px;
+    margin-top: 4px;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
   .cart-item-qty-control {
@@ -329,32 +555,36 @@
     border: 1px solid var(--border-color);
     width: fit-content;
     border-radius: 4px;
-    margin-top: 8px;
+    margin-top: 10px;
     overflow: hidden;
+    background-color: var(--bg-white);
   }
   .cart-item-qty-control button {
     background: none;
     border: none;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
     font-size: 14px;
-    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
   }
   .cart-item-qty-control button:hover { background-color: var(--bg-light); }
   .cart-item-qty-control span {
     font-size: 12px;
-    font-weight: 600;
-    padding: 0 10px;
-    min-width: 25px;
+    font-weight: 700;
+    padding: 0 12px;
+    min-width: 30px;
     text-align: center;
   }
 
   .cart-item-price {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
     position: absolute;
-    bottom: 20px;
+    bottom: 22px;
     right: 0;
   }
 
@@ -364,27 +594,28 @@
     right: 0;
     background: none;
     border: none;
-    color: #999;
+    color: #aaaaaa;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 14px;
     transition: color 0.3s;
   }
   .cart-item-remove:hover { color: var(--error-color); }
 
   .cart-footer {
-    padding: 24px;
+    padding: 28px;
     border-top: 1px solid var(--border-color);
     background-color: var(--bg-white);
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.02);
   }
 
   .subtotal-row {
     display: flex;
     justify-content: space-between;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
   }
 
   .checkout-btn {
@@ -392,162 +623,212 @@
     background-color: var(--text-black);
     color: var(--bg-white);
     border: none;
-    padding: 18px;
-    font-size: 12px;
+    padding: 20px;
+    font-size: 13px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
     cursor: pointer;
     border-radius: 4px;
-    transition: opacity 0.3s, transform 0.2s;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-medium);
   }
-  .checkout-btn:hover { opacity: 0.9; }
-  .checkout-btn:active { transform: scale(0.99); }
+  .checkout-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+  .checkout-btn:active { transform: translateY(0); }
 
-  /* 🔹 صفحة الدفع الاحترافية الكاملة */
+  /* 🔹 Checkout View Layout Component */
   .checkout-view {
     display: none;
-    max-width: 580px;
+    max-width: 620px;
     margin: 0 auto;
-    padding: 40px 6% 100px;
-    animation: fadeIn 0.5s ease;
+    padding: 50px 6% 120px;
+    animation: premiumFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .checkout-summary-box {
     background-color: var(--bg-light);
-    padding: 24px;
+    padding: 26px;
     border-radius: 6px;
-    margin-bottom: 35px;
+    margin-bottom: 40px;
     border: 1px solid var(--border-color);
   }
   .summary-header {
     display: flex;
     justify-content: space-between;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
   }
 
   .checkout-section-title {
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 700;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    border-left: 3px solid var(--text-black);
+    padding-left: 12px;
   }
 
   .checkout-form {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 18px;
   }
 
   .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 18px;
   }
 
   .input-field {
     width: 100%;
-    padding: 15px;
+    padding: 16px;
     border: 1px solid #dcdcdc;
-    border-radius: 5px;
+    border-radius: 6px;
     font-size: 14px;
     outline: none;
     background-color: var(--bg-white);
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, box-shadow 0.3s;
   }
-  .input-field:focus { border-color: var(--text-black); }
+  .input-field:focus {
+    border-color: var(--text-black);
+    box-shadow: 0 0 0 3px rgba(0,0,0,0.03);
+  }
 
   .checkbox-group {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 12px;
+    gap: 12px;
+    font-size: 13px;
     font-weight: 500;
-    color: #444;
+    color: #333;
     margin: 4px 0;
   }
-  .checkbox-group input { width: 15px; height: 15px; accent-color: var(--text-black); }
+  .checkbox-group input { width: 16px; height: 16px; accent-color: var(--text-black); }
 
   .place-order-btn {
     width: 100%;
     background-color: var(--text-black);
     color: var(--bg-white);
     border: none;
-    padding: 18px;
-    font-size: 13px;
+    padding: 20px;
+    font-size: 14px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    border-radius: 5px;
+    letter-spacing: 2px;
+    border-radius: 6px;
     cursor: pointer;
-    margin-top: 15px;
-    transition: opacity 0.3s, transform 0.2s;
+    margin-top: 20px;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-medium);
   }
-  .place-order-btn:hover { opacity: 0.9; }
+  .place-order-btn:hover { opacity: 0.9; transform: translateY(-2px); }
 
-  .back-to-store-link { text-align: center; margin-top: 25px; }
+  .back-to-store-link { text-align: center; margin-top: 30px; }
   .back-to-store-link a {
     color: var(--text-muted);
     font-size: 12px;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 700;
     transition: color 0.3s;
   }
+  .back-to-store-link a:hover { color: var(--text-black); }
 
-  /* 🔹 قائمة الموقع الجانبية */
+  /* 🔹 Site Navigation Sidebar Menu */
   .site-sidebar {
     position: fixed;
     top: 0;
-    left: -320px;
-    width: 320px;
+    left: -340px;
+    width: 340px;
     height: 100%;
     background-color: var(--bg-white);
     z-index: 1005;
-    padding: 40px 30px;
+    padding: 45px 35px;
     border-right: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
     transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 25px 0 60px rgba(0,0,0,0.05);
   }
   .site-sidebar.active { left: 0; }
-  .site-sidebar-close { align-self: flex-end; background: none; border: none; font-size: 26px; cursor: pointer; margin-bottom: 40px; }
+  .site-sidebar-close {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    margin-bottom: 40px;
+    transition: var(--transition-smooth);
+  }
+  .site-sidebar-close:hover { transform: rotate(90deg); }
 
-  .site-menu { list-style: none; display: flex; flex-direction: column; gap: 24px; }
-  .site-menu li a { color: var(--text-black); text-decoration: none; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
+  .site-menu { list-style: none; display: flex; flex-direction: column; gap: 26px; }
+  .site-menu li a {
+    color: var(--text-black);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    transition: var(--transition-smooth);
+  }
+  .site-menu li a:hover { padding-left: 8px; color: var(--text-muted); }
 
-  /* 🔹 زر الصعود للأعلى الدائري الفخم */
+  .sidebar-contact-info {
+    margin-top: auto;
+    padding-top: 40px;
+    border-top: 1px solid var(--border-color);
+  }
+  .sidebar-contact-info h4 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .sidebar-contact-info p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .sidebar-contact-info a {
+    color: var(--text-black);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  /* 🔹 Circular Floating Top Scroll Button */
   .top-scroll-btn {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: 35px;
+    right: 35px;
     background-color: var(--bg-white);
     color: var(--text-black);
     border: 1px solid var(--border-color);
-    width: 48px;
-    height: 48px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: 11px;
+    font-size: 12px;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
     z-index: 99;
     opacity: 0;
     visibility: hidden;
     transition: var(--transition-smooth);
   }
   .top-scroll-btn.show { opacity: 1; visibility: visible; }
-  .top-scroll-btn span { font-size: 7px; font-weight: 700; text-transform: uppercase; margin-top: 1px; }
-  .top-scroll-btn:hover { background-color: var(--bg-light); transform: translateY(-3px); }
+  .top-scroll-btn span { font-size: 7px; font-weight: 800; text-transform: uppercase; margin-top: 2px; letter-spacing: 0.5px; }
+  .top-scroll-btn:hover { background-color: var(--text-black); color: var(--bg-white); transform: translateY(-4px); }
 
+  /* 🔹 Background Overlay Dark Veil */
   .overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -555,31 +836,128 @@
     z-index: 900;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.5s ease;
   }
   .overlay.active { opacity: 1; pointer-events: auto; }
 
-  footer { text-align: center; padding: 50px 20px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 10px; letter-spacing: 1.5px; }
+  /* 🔹 Professional Footer Layout */
+  footer {
+    background-color: #fcfcfc;
+    text-align: center;
+    padding: 70px 20px;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
+  }
+  .footer-links-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+  .footer-links-wrapper a {
+ 
+    color: var(--text-black);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: var(--transition-smooth);
+  }
+  .footer-links-wrapper a:hover {
+    color: var(--text-gold);
+    transform: translateY(-2px);
+  }
+  .footer-urgent-call {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-black);
+    margin-top: 20px;
+    letter-spacing: 1px;
+  }
+  .footer-urgent-call a {
+    color: var(--text-black);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--text-black);
+    padding-bottom: 2px;
+  }
+  .footer-copyright-text {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 25px;
+    color: var(--text-muted);
+  }
 
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes slideInShort { from { opacity: 0; transform: translateX(15px); } to { opacity: 1; transform: translateX(0); } }
+  /* 🔹 Premium Animation Keyframes Library */
+  @keyframes premiumFadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes itemSlideIn {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes pulseGold {
+    0% { box-shadow: 0 0 0 0 rgba(197, 168, 128, 0.4); }
+    70% { box-shadow: 0 0 0 15px rgba(197, 168, 128, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(197, 168, 128, 0); }
+  }
 
-  @media (min-width: 768px) { .products-grid { grid-template-columns: repeat(2, 1fr); gap: 25px; } .product-image-wrapper { height: 300px; } .hero-section h1 { font-size: 42px; } }
-  @media (min-width: 1024px) { .products-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; } .product-image-wrapper { height: 340px; } }
+  /* 🔹 Comprehensive Device Media Queries Matrix */
+  @media (max-width: 480px) {
+    .products-grid { grid-template-columns: 1fr !important; gap: 30px; padding: 10px 6% 60px; }
+    .hero-section h1 { font-size: 32px; letter-spacing: 4px; }
+    .product-image-wrapper { height: 260px; }
+    .form-row { grid-template-columns: 1fr; gap: 15px; }
+    .top-contact-bar { flex-direction: column; gap: 8px; text-align: center; padding: 10px; }
+    .top-contact-left a { margin-right: 8px; margin-left: 8px; }
+  }
+  @media (min-width: 481px) and (max-width: 767px) {
+    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .features-container { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 768px) {
+    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 35px; }
+    .features-container { grid-template-columns: repeat(4, 1fr); }
+    .reviews-container-grid { grid-template-columns: repeat(3, 1fr); }
+    .hero-section h1 { font-size: 55px; }
+    .product-image-wrapper { height: 340px; }
+  }
+  @media (min-width: 1024px) {
+    .products-grid { grid-template-columns: repeat(4, 1fr); gap: 30px; }
+    .product-image-wrapper { height: 360px; }
+  }
+  @media (min-width: 1400px) {
+    .products-grid { max-width: 1400px; gap: 40px; }
+  }
 </style>
 </head>
 <body>
 
   <div class="overlay" id="pageOverlay" onclick="closeAllPanels()"></div>
-  <div class="announcement-bar">Livraison Gratuite sur toute la Tunisie</div>
+
+  <div class="announcement-bar">Livraison Gratuite sur toute la Tunisie (24-48H)</div>
+
+  <div class="top-contact-bar">
+    <div class="top-contact-left">
+      <a href="https://www.instagram.com/fajraouisaifeddine?igsh=YWNoZ2F3NjVkZTU0" target="_blank"><i class="fa-brands fa-instagram"></i> @fajraouisaifeddine</a>
+      <a href="tel:40280174"><i class="fa-solid fa-phone"></i> +216 40 280 174</a>
+    </div>
+    <div class="top-contact-right">
+      <a href="https://wa.me/21640280174" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp Chat</a>
+    </div>
+  </div>
 
   <header>
     <div class="nav-left">
-      <button class="menu-toggle" onclick="toggleSiteSidebar()"><i class="fa-solid fa-bars"></i></button>
-      <a href="#" class="logo" onclick="showStoreView()">FAJRAOUI<span>STORE</span></a>
+      <button class="menu-toggle" onclick="toggleSiteSidebar()" aria-label="Open Navigation Menu"><i class="fa-solid fa-bars"></i></button>
+      <a href="#" class="logo" onclick="showStoreView(); return false;">FAJRAOUI<span>BOUTIQUE</span></a>
     </div>
     <div class="nav-right">
-      <button class="cart-icon-btn" onclick="toggleCartSidebar()">
+      <a href="https://www.instagram.com/fajraouisaifeddine?igsh=YWNoZ2F3NjVkZTU0" target="_blank" class="nav-social-link" aria-label="Follow us on Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <button class="cart-icon-btn" onclick="toggleCartSidebar()" aria-label="Open Shopping Cart Side Panel">
         <i class="fa-solid fa-bag-shopping"></i>
         <span class="cart-count" id="headerCartCount">0</span>
       </button>
@@ -589,104 +967,205 @@
   <div class="site-sidebar" id="siteSidebar">
     <button class="site-sidebar-close" onclick="toggleSiteSidebar()">×</button>
     <ul class="site-menu">
-      <li><a href="#" onclick="showStoreView(); toggleSiteSidebar();">Shop Collection</a></li>
-      <li><a href="#">Charity Program 2026</a></li>
-      <li><a href="#">Last Size Clearance</a></li>
-      <li><a href="#">Lookbook</a></li>
-      <li><a href="#">Contact</a></li>
-      <li><a href="#">About Us</a></li>
+      <li><a href="#" onclick="showStoreView(); toggleSiteSidebar(); return false;">Shop Collection</a></li>
+      <li><a href="https://www.instagram.com/fajraouisaifeddine?igsh=YWNoZ2F3NjVkZTU0" target="_blank">Instagram Profile</a></li>
+      <li><a href="#" onclick="closeAllPanels(); window.scrollTo(0, document.getElementById('brandFeatures').offsetTop); return false;">Our Commitments</a></li>
+      <li><a href="#" onclick="closeAllPanels(); window.scrollTo(0, document.getElementById('customerReviews').offsetTop); return false;">Customer Feedback</a></li>
+      <li><a href="#" onclick="closeAllPanels(); window.scrollTo(0, document.getElementById('faqSection').offsetTop); return false;">Help & FAQ</a></li>
     </ul>
+    <div class="sidebar-contact-info">
+      <h4>Contact Manager</h4>
+      <p>Instagram: <a href="https://www.instagram.com/fajraouisaifeddine?igsh=YWNoZ2F3NjVkZTU0" target="_blank">@fajraouisaifeddine</a></p>
+      <p>Phone: <a href="tel:40280174">+216 40 280 174</a></p>
+    </div>
   </div>
 
   <main class="main-store-view" id="storeView">
     <section class="hero-section">
       <h1>FAJRAOUI</h1>
-      <p>Luxury Cosmetics Boutique</p>
+      <p>Luxury Perfumes & Cosmetics Boutique</p>
+      <div class="hero-divider"></div>
     </section>
 
     <section class="products-grid">
       <div class="product-card">
-        <div class="product-image-wrapper"><img src="1000088935.jpg" alt="Elegance Bleu Royal"></div>
-        <h3 class="product-title">Elegance Bleu Royal</h3>
-        <div class="product-price">130.000 DT</div>
-        <button class="add-to-cart-btn" onclick="addToCart('Elegance Bleu Royal', 130.000, '1000088935.jpg', 'L')">Add to Cart</button>
+        <div class="product-image-wrapper"><img src="1000088935.jpg" alt="Luxury Fragrance Elegance Bleu Royal"></div>
+        <div class="product-info-box">
+          <h3 class="product-title">Elegance Bleu Royal</h3>
+          <div class="product-price">130.000 DT</div>
+          <button class="add-to-cart-btn" onclick="addToCart('Elegance Bleu Royal', 130.000, '1000088935.jpg', 'L')">Add to Cart</button>
+        </div>
       </div>
 
       <div class="product-card">
-        <div class="product-image-wrapper"><img src="1000088936.jpg" alt="Fraîcheur Bleu Lagon"></div>
-        <h3 class="product-title">Fraîcheur Bleu Lagon</h3>
-        <div class="product-price">110.000 DT</div>
-        <button class="add-to-cart-btn" onclick="addToCart('Fraîcheur Bleu Lagon', 110.000, '1000088936.jpg', 'M')">Add to Cart</button>
+        <div class="product-image-wrapper"><img src="1000088936.jpg" alt="Luxury Fragrance Fraîcheur Bleu Lagon"></div>
+        <div class="product-info-box">
+          <h3 class="product-title">Fraîcheur Bleu Lagon</h3>
+          <div class="product-price">110.000 DT</div>
+          <button class="add-to-cart-btn" onclick="addToCart('Fraîcheur Bleu Lagon', 110.000, '1000088936.jpg', 'M')">Add to Cart</button>
+        </div>
       </div>
 
       <div class="product-card">
-        <div class="product-image-wrapper"><img src="1000088937.jpg" alt="Pureté Vert Émeraude"></div>
-        <h3 class="product-title">Pureté Vert Émeraude</h3>
-        <div class="product-price">130.000 DT</div>
-        <button class="add-to-cart-btn" onclick="addToCart('Pureté Vert Émeraude', 130.000, '1000088937.jpg', 'M')">Add to Cart</button>
+        <div class="product-image-wrapper"><img src="1000088937.jpg" alt="Luxury Fragrance Pureté Vert Émeraude"></div>
+        <div class="product-info-box">
+          <h3 class="product-title">Pureté Vert Émeraude</h3>
+          <div class="product-price">130.000 DT</div>
+          <button class="add-to-cart-btn" onclick="addToCart('Pureté Vert Émeraude', 130.000, '1000088937.jpg', 'M')">Add to Cart</button>
+        </div>
       </div>
 
       <div class="product-card">
-        <div class="product-image-wrapper"><img src="1000088938.jpg" alt="Luxe Rouge Rubis"></div>
-        <h3 class="product-title">Luxe Rouge Rubis</h3>
-        <div class="product-price">120.000 DT</div>
-        <button class="add-to-cart-btn" onclick="addToCart('Luxe Rouge Rubis', 120.000, '1000088938.jpg', 'L')">Add to Cart</button>
+        <div class="product-image-wrapper"><img src="1000088938.jpg" alt="Luxury Fragrance Luxe Rouge Rubis"></div>
+        <div class="product-info-box">
+          <h3 class="product-title">Luxe Rouge Rubis</h3>
+          <div class="product-price">120.000 DT</div>
+          <button class="add-to-cart-btn" onclick="addToCart('Luxe Rouge Rubis', 120.000, '1000088938.jpg', 'L')">Add to Cart</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="brand-features-section" id="brandFeatures">
+      <div class="features-container">
+        <div class="feature-item-box">
+          <i class="fa-solid fa-truck-ramp-box"></i>
+          <h4>Livraison Rapide</h4>
+          <p>Expédition rapide sur toute la Tunisie unter 24 à 48 heures à votre domicile.</p>
+        </div>
+        <div class="feature-item-box">
+          <i class="fa-solid fa-shield-halved"></i>
+          <h4>Qualité Garantie</h4>
+          <p>Produits 100% authentiques et rigoureusement sélectionnés pour votre bien-être.</p>
+        </div>
+        <div class="feature-item-box">
+          <i class="fa-solid fa-headset"></i>
+          <h4>Support Client 24/7</h4>
+          <p>Contactez-nous directement sur Instagram ou par téléphone à tout moment.</p>
+        </div>
+        <div class="feature-item-box">
+          <i class="fa-solid fa-credit-card"></i>
+          <h4>Paiement à la livraison</h4>
+          <p>Payez en toute sécurité en espèces au livreur uniquement lorsque vous recevez votre colis.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="reviews-section-wrapper" id="customerReviews">
+      <h2 class="section-headline">Avis de Nos Clients Luxe</h2>
+      <div class="reviews-container-grid">
+        <div class="review-card-element">
+          <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p class="review-text-content">"Le parfum Elegance Bleu Royal est tout simplement divin. La tenue est exceptionnelle et la livraison à Sousse s'est faite en moins de 24 heures. Magnifique boutique !"</p>
+          <div class="review-author-info">Yasmine K. <span>Tunis</span></div>
+        </div>
+        <div class="review-card-element">
+          <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p class="review-text-content">"J'ai commandé Pureté Vert Émeraude. Le flacon est une œuvre d'art et l'odeur fraîche est parfaite pour toutes les occasions. Très bon service client réactif sur Instagram."</p>
+          <div class="review-author-info">Ahmed B. <span>Sfax</span></div>
+        </div>
+        <div class="review-card-element">
+          <div class="review-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p class="review-text-content">"Boutique sérieuse, produits très luxueux et emballage de haute protection. Le paiement à la livraison donne une grande confiance. Je commanderai à nouveau sans hésiter."</p>
+          <div class="review-author-info">Meriam T. <span>Bizerte</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq-section-wrapper" id="faqSection">
+      <h2 class="section-headline" style="text-align: center;">Questions Fréquentes (FAQ)</h2>
+      <div class="faq-accordion-container">
+        <div class="faq-item-row">
+          <button class="faq-trigger-btn" onclick="toggleFaqAccordion(this)">Comment puis-je passer une commande ? <i class="fa-solid fa-chevron-down"></i></button>
+          <div class="faq-panel-content"><p>Il vous suffit d'ajouter vos parfums préférés au panier, de cliquer sur "Check Out", de remplir vos informations de contact et votre adresse exacte en Tunisie, puis de confirmer.</p></div>
+        </div>
+        <div class="faq-item-row">
+          <button class="faq-trigger-btn" onclick="toggleFaqAccordion(this)">Quels sont les délais et tarifs de livraison ? <i class="fa-solid fa-chevron-down"></i></button>
+          <div class="faq-panel-content"><p>La livraison est entièrement gratuite sur toute la Tunisie pour célébrer le lancement de la collection 2026. Votre colis arrive chez vous sous 24 à 48 heures.</p></div>
+        </div>
+        <div class="faq-item-row">
+          <button class="faq-trigger-btn" onclick="toggleFaqAccordion(this)">Comment contacter le service client en cas de besoin ? <i class="fa-solid fa-chevron-down"></i></button>
+          <div class="faq-panel-content"><p>Vous pouvez nous joindre directement via notre compte officiel Instagram @fajraouisaifeddine ou par téléphone direct au numéro +216 40 280 174 pour toute assistance immédiate.</p></div>
+        </div>
       </div>
     </section>
   </main>
 
   <div class="cart-sidebar" id="cartSidebar">
-    <div class="cart-header"><h2>Your Cart</h2><button class="cart-close" onclick="toggleCartSidebar()">×</button></div>
-    <div class="cart-items-container" id="cartItemsList"></div>
+    <div class="cart-header">
+      <h2>Votre Panier</h2>
+      <button class="cart-close" onclick="toggleCartSidebar()">×</button>
+    </div>
+    <div class="cart-items-container" id="cartItemsList">
+      </div>
     <div class="cart-footer">
-      <div class="subtotal-row"><span>Subtotal</span><span id="cartSubtotalValue">0.000 DT</span></div>
-      <button class="checkout-btn" onclick="goToCheckout()">Check Out</button>
+      <div class="subtotal-row">
+        <span>Sous-total Net</span>
+        <span id="cartSubtotalValue">0.000 DT</span>
+      </div>
+      <button class="checkout-btn" onclick="goToCheckout()">Passer à la Caisse</button>
     </div>
   </div>
 
   <main class="checkout-view" id="checkoutView">
     <div class="checkout-summary-box">
-      <div class="summary-header"><span>Order summary</span><span id="checkoutTotalDisplay">0.000 DT</span></div>
+      <div class="summary-header">
+        <span>Résumé de votre commande</span>
+        <span id="checkoutTotalDisplay">0.000 DT</span>
+      </div>
     </div>
 
-    <h2 class="checkout-section-title">Contact Information</h2>
-    <form id="finalOrderForm" action="https://api.web3forms.com/submit" method="POST">
+    <h2 class="checkout-section-title">Informations de Contact Personal</h2>
+    <form id="finalOrderForm" action="https://api.web3forms.com/submit" method="POST" onsubmit="return validateCheckoutForm()">
       <input type="hidden" name="access_key" value="4c777645-d0ba-461d-af1f-3e904c833bb2">
       <input type="hidden" name="Détails du Panier" id="hiddenCartDetails">
       <input type="hidden" name="Total Net" id="hiddenTotalField">
 
       <div class="checkout-form">
-        <input type="text" name="Contact_Nom_Prenom" class="input-field" placeholder="Nom et Prénom" required>
-        <input type="tel" name="Contact_Telephone" class="input-field" placeholder="Numéro de Téléphone" required>
+        <input type="text" name="Contact_Nom_Prenom" id="inputName" class="input-field" placeholder="Nom et Prénom Complet" required>
+        <input type="tel" name="Contact_Telephone" id="inputPhone" class="input-field" placeholder="Numéro de Téléphone (8 chiffres)" required>
         
         <div class="checkbox-group">
           <input type="checkbox" id="newsOffers" name="Inscrire_aux_Offres" checked>
-          <label for="newsOffers">Email me with news and offers</label>
+          <label for="newsOffers">S'abonner à notre newsletter pour des offres exclusives</label>
         </div>
 
-        <h2 class="checkout-section-title" style="margin-top: 20px; margin-bottom: 4px;">Delivery Address</h2>
-        <input type="text" value="Tunisia" class="input-field" readonly style="background-color: #f5f5f5; color: #555; cursor: not-allowed; font-weight: 500;">
+        <h2 class="checkout-section-title" style="margin-top: 25px; margin-bottom: 5px;">Adresse de Livraison Exclusive</h2>
+        <input type="text" value="Tunisia" class="input-field" readonly style="background-color: #f5f5f5; color: #555; cursor: not-allowed; font-weight: 600; border-color: #e0e0e0;">
         
         <div class="form-row">
-          <select name="Gouvernorat" class="input-field" required>
-            <option value="" disabled selected>Gouvernorat (الولاية)</option>
-            <option value="Tunis">Tunis</option><option value="Ariana">Ariana</option><option value="Ben Arous">Ben Arous</option><option value="Manouba">Manouba</option><option value="Nabeul">Nabeul</option><option value="Zaghouan">Zaghouan</option><option value="Bizerte">Bizerte</option><option value="Beja">Béja</option><option value="Jendouba">Jendouba</option><option value="Le Kef">Le Kef</option><option value="Siliana">Siliana</option><option value="Sousse">Sousse</option><option value="Monastir">Monastir</option><option value="Mahdia">Mahdia</option><option value="Sfax">Sfax</option><option value="Kairouan">Kairouan</option><option value="Kasserine">Kasserine</option><option value="Sidi Bouzid">Sidi Bouzid</option><option value="Gabes">Gabès</option><option value="Medenine">Médenine</option><option value="Tataouine">Tataouine</option><option value="Gafsa">Gafsa</option><option value="Tozeur">Tozeur</option><option value="Kebili">Kébili</option>
+          <select name="Gouvernorat" id="selectGouvernorat" class="input-field" required>
+            <option value="" disabled selected>Choisir Gouvernorat (الولاية)</option>
+            <option value="Tunis">Tunis (تونس)</option><option value="Ariana">Ariana (أريانة)</option><option value="Ben Arous">Ben Arous (بن عروس)</option><option value="Manouba">Manouba (منوبة)</option><option value="Nabeul">Nabeul (نابل)</option><option value="Zaghouan">Zaghouan (زغوان)</option><option value="Bizerte">Bizerte (بنزرت)</option><option value="Beja">Béja (باجة)</option><option value="Jendouba">Jendouba (جندوبة)</option><option value="Le Kef">Le Kef (الكاف)</option><option value="Siliana">Siliana (سليانة)</option><option value="Sousse">Sousse (سوسة)</option><option value="Monastir">Monastir (المنستير)</option><option value="Mahdia">Mahdia (المهدية)</option><option value="Sfax">Sfax (صفاقس)</option><option value="Kairouan">Kairouan (القيروان)</option><option value="Kasserine">Kasserine (القصرين)</option><option value="Sidi Bouzid">Sidi Bouzid (سيدي بوزيد)</option><option value="Gabes">Gabès (قابس)</option><option value="Medenine">Médenine (مدنين)</option><option value="Tataouine">Tataouine (تطاوين)</option><option value="Gafsa">Gafsa (قفصة)</option><option value="Tozeur">Tozeur (توزر)</option><option value="Kebili">Kébili (قبلي)</option>
           </select>
-          <input type="text" name="Ville_Adresse" class="input-field" placeholder="Adresse complète" required>
+          <input type="text" name="Ville_Adresse" id="inputAddress" class="input-field" placeholder="Adresse complète (Rue, Cité, Ville)" required>
         </div>
-        <button type="submit" class="place-order-btn">Place Order (تأكيد الطلب)</button>
+
+        <div style="background-color: #f0f7f4; padding: 15px; border-radius: 6px; border: 1px solid #d4edda; color: #155724; font-size: 12px; font-weight: 500; display: flex; align-items: center; gap: 10px;">
+          <i class="fa-solid fa-circle-check" style="font-size: 16px;"></i> Mode de paiement actif : Paiement en espèces à la livraison.
+        </div>
+
+        <button type="submit" class="place-order-btn">Confirmer Ma Commande (تأكيد الطلب)</button>
       </div>
     </form>
-    <div class="back-to-store-link"><a href="#" onclick="showStoreView(); return false;">← Back to store</a></div>
+    <div class="back-to-store-link"><a href="#" onclick="showStoreView(); return false;">← Retourner à la boutique boutique</a></div>
   </main>
 
-  <button class="top-scroll-btn" id="scrollTopBtn" onclick="scrollToTop()"><i class="fa-solid fa-arrow-up"></i><span>TOP</span></  <button class="top-scroll-btn" id="scrollTopBtn" onclick="scrollToTop()"><i class="fa-solid fa-arrow-up"></i><span>TOP</span></button>
+  <button class="top-scroll-btn" id="scrollTopBtn" onclick="scrollToTop()"><i class="fa-solid fa-arrow-up"></i><span>TOP</span></button>
 
-  <footer><p>&copy; 2026 FAJRAOUI STORE. All Rights Reserved.</p></footer>
+  <footer>
+    <div class="footer-links-wrapper">
+      <a href="#" onclick="showStoreView(); return false;">Boutique</a>
+      <a href="https://www.instagram.com/fajraouisaifeddine?igsh=YWNoZ2F3NjVkZTU0" target="_blank">Instagram Officiel</a>
+      <a href="tel:40280174">Assistance Téléphonique</a>
+    </div>
+    <p class="footer-urgent-call">Contact Urgent : <a href="tel:40280174">+216 40 280 174</a> | Instagram : <a href="https://www.instagram.com/fajraouisaifeddine?igsh=YWNoZ2F3NjVkZTU0" target="_blank">@fajraouisaifeddine</a></p>
+    <p class="footer-copyright-text">&copy; 2026 FAJRAOUI STORE LUXE. Conçu avec excellence pour une expérience royale.</p>
+  </footer>
 
   <script>
     let cart = [];
 
+    // Scroll Position Observer Module for Back To Top Button Display Visibility Toggling
     window.onscroll = function() {
       let btn = document.getElementById("scrollTopBtn");
       if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
@@ -696,11 +1175,28 @@
       }
     };
 
+    // Global Core Action Processing Layout Interaction Management Routing
     function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
     function toggleCartSidebar() { document.getElementById('cartSidebar').classList.toggle('active'); document.getElementById('pageOverlay').classList.toggle('active'); }
     function toggleSiteSidebar() { document.getElementById('siteSidebar').classList.toggle('active'); document.getElementById('pageOverlay').classList.toggle('active'); }
     function closeAllPanels() { document.getElementById('cartSidebar').classList.remove('active'); document.getElementById('siteSidebar').classList.remove('active'); document.getElementById('pageOverlay').classList.remove('active'); }
 
+    // Interactive FAQ Event Handling Management Accordion Processing Core Routing
+    function toggleFaqAccordion(element) {
+      let panel = element.nextElementSibling;
+      let icon = element.querySelector('i');
+      if (panel.style.maxHeight && panel.style.maxHeight !== "0px") {
+        panel.style.maxHeight = "0px";
+        icon.style.transform = "rotate(0deg)";
+      } else {
+        document.querySelectorAll('.faq-panel-content').forEach(p => p.style.maxHeight = "0px");
+        document.querySelectorAll('.faq-trigger-btn i').forEach(i => i.style.transform = "rotate(0deg)");
+        panel.style.maxHeight = panel.scrollHeight + "px";
+        icon.style.transform = "rotate(180deg)";
+      }
+    }
+
+    // Advanced Local Virtual Cart In-Memory Array State Mutator Object Modifier Processing Interface
     function addToCart(name, price, img, size) {
       let existingItem = cart.find(item => item.name === name && item.size === size);
       if (existingItem) { existingItem.qty++; } else { cart.push({ name, price, img, size, qty: 1 }); }
@@ -708,20 +1204,31 @@
       toggleCartSidebar();
     }
 
-    function changeQty(index, delta) { cart[index].qty += delta; if (cart[index].qty <= 0) { cart.splice(index, 1); } updateCartUI(); }
-    function removeItem(index) { cart.splice(index, 1); updateCartUI(); }
+    function changeQty(index, delta) { 
+      cart[index].qty += delta; 
+      if (cart[index].qty <= 0) { cart.splice(index, 1); } 
+      updateCartUI(); 
+    }
+    
+    function removeItem(index) { 
+      cart.splice(index, 1); 
+      updateCartUI(); 
+    }
 
+    // Virtual In-Memory State Syncing Dynamic UI Vector DOM Renderer Layout Function
     function updateCartUI() {
       let cartCount = 0, subtotal = 0, cartItemsHTML = '', hiddenDetailsText = '';
       cart.forEach((item, index) => {
-        cartCount += item.qty; let itemTotal = item.price * item.qty; subtotal += itemTotal;
+        cartCount += item.qty; 
+        let itemTotal = item.price * item.qty; 
+        subtotal += itemTotal;
         hiddenDetailsText += `${item.name} [Size: ${item.size}] (x${item.qty}) - ${itemTotal.toFixed(3)} DT \n`;
         cartItemsHTML += `
           <div class="cart-item">
             <div class="cart-item-img"><img src="${item.img}"></div>
             <div class="cart-item-details">
               <div class="cart-item-title">${item.name}</div>
-              <div class="cart-item-size">Size: ${item.size}</div>
+              <div class="cart-item-size">Taille/Type: ${item.size}</div>
               <div class="cart-item-qty-control"><button onclick="changeQty(${index}, -1)">-</button><span>${item.qty}</span><button onclick="changeQty(${index}, 1)">+</button></div>
             </div>
             <div class="cart-item-price">${itemTotal.toFixed(3)} DT</div>
@@ -736,8 +1243,35 @@
       document.getElementById('hiddenTotalField').value = subtotal.toFixed(3) + ' DT';
     }
 
-    function goToCheckout() { if(cart.length === 0) { alert("Panier vide!"); return; } closeAllPanels(); document.getElementById('storeView').style.display = 'none'; document.getElementById('checkoutView').style.display = 'block'; scrollToTop(); }
-    function showStoreView() { document.getElementById('checkoutView').style.display = 'none'; document.getElementById('storeView').style.display = 'block'; scrollToTop(); }
+    // View Switching State Transitions Pipeline Engines
+    function goToCheckout() { 
+      if(cart.length === 0) { alert("Votre panier est actuellement vide! Veuillez sélectionner des produits avant de passer à la caisse."); return; } 
+      closeAllPanels(); 
+      document.getElementById('storeView').style.display = 'none'; 
+      document.getElementById('checkoutView').style.display = 'block'; 
+      scrollToTop(); 
+    }
+    
+    function showStoreView() { 
+      document.getElementById('checkoutView').style.display = 'none'; 
+      document.getElementById('storeView').style.display = 'block'; 
+      scrollToTop(); 
+    }
+
+    // Advanced Form Input Client Side Verification Pipeline Routing Guard
+    function validateCheckoutForm() {
+      let phone = document.getElementById('inputPhone').value.trim();
+      let name = document.getElementById('inputName').value.trim();
+      let gov = document.getElementById('selectGouvernorat').value;
+      let address = document.getElementById('inputAddress').value.trim();
+
+      if(name.length < 5) { alert("Veuillez saisir votre nom et prénom complets s'il vous plaît."); return false; }
+      if(phone.length !== 8 || isNaN(phone)) { alert("Erreur: Le numéro de téléphone tunisien doit contenir exactement 8 chiffres."); return false; }
+      if(!gov) { alert("Veuillez sélectionner votre Gouvernorat pour la livraison."); return false; }
+      if(address.length < 8) { alert("Veuillez préciser votre adresse de livraison exacte de manière détaillée."); return false; }
+      
+      return true;
+    }
   </script>
 </body>
 </html>
