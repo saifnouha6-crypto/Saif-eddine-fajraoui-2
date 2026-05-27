@@ -963,24 +963,32 @@
     </div>
     <div class="nav-right">
 
-  <button class="cart-icon-btn" onclick="toggleCartSidebar()" aria-label="Open Shopping Cart Side Panel">
+<button class="cart-icon-btn" onclick="toggleCartSidebar()" aria-label="Cart">
 
-    <span style="
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      border: 1px solid #4a7c59;
-      padding: 4px 8px;
-      border-radius: 3px;
-      color: #4a7c59;
-      text-transform: uppercase;
-    ">
-      PANIER
-    </span>
+  <i class="fa-solid fa-bag-shopping"></i>
 
-    <span class="cart-count" id="headerCartCount">0</span>
+  <span class="cart-count-minimal" id="headerCartCount">0</span>
 
-      </button>
+</button>
+
+<style>
+.cart-icon-btn {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #111;
+  font-size: 24px;
+}
+
+.cart-count-minimal {
+  font-size: 18px;
+  font-weight: 400;
+  color: #555;
+}
+</style>
       
     </div>
 </header>
