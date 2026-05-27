@@ -1341,7 +1341,7 @@ document.getElementById("finalOrderForm").addEventListener("submit", async funct
       return;
   }
 
-  // 3. الإرسال
+  // 3. تغيير حالة الزر
   const submitBtn = this.querySelector('button[type="submit"]');
   submitBtn.innerText = "Envoi en cours...";
   submitBtn.disabled = true;
@@ -1360,20 +1360,22 @@ document.getElementById("finalOrderForm").addEventListener("submit", async funct
     const json = await res.json();
     
     if(json.success) {
-      // هذه هي الرسالة التي ستظهر في الموقع (كما في صورتك)
+      // هذه هي صفحة التأكيد الثابتة (Fixed) التي تظهر فوق كل شيء
       document.getElementById("checkoutView").innerHTML = `
-        <div style="padding:40px 25px;text-align:center;min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;">
-          <div style="background:#e8f5e9;width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:32px;">✅</div>
-          <h1 style="font-size:26px;margin-bottom:10px;">Commande confirmée !</h1>
-          <p style="font-size:15px;color:#555;margin-bottom:28px;">Votre commande a été envoyée avec succès.</p>
-          <div style="background:#f5f5f5;padding:25px;border-radius:10px;margin-bottom:28px;font-size:15px;line-height:2;text-align:left;width:100%;max-width:440px;">
+        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: white; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;">
+          <div style="font-size: 50px; margin-bottom: 15px;">✅</div>
+          <h1 style="font-size: 24px; margin: 0 0 10px 0;">Commande confirmée !</h1>
+          <p style="font-size: 14px; color: #555; margin-bottom: 20px;">Votre commande a été envoyée avec succès.</p>
+          
+          <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; margin-bottom: 25px; font-size: 14px; line-height: 1.6; text-align: left; width: 100%; max-width: 350px;">
             <b>👤 Nom :</b> ${name}<br>
             <b>📞 Téléphone :</b> ${phone}<br>
             <b>📍 Gouvernorat :</b> ${gov}<br>
             <b>🏠 Adresse :</b> ${address}<br>
             <b>💰 Total :</b> ${total}
           </div>
-          <button onclick="location.reload()" style="background:black;color:white;border:none;padding:16px 32px;font-size:14px;font-weight:700;border-radius:8px;cursor:pointer;">BACK TO STORE</button>
+
+          <button onclick="location.reload()" style="background: black; color: white; border: none; padding: 14px 40px; font-size: 14px; font-weight: bold; border-radius: 5px; cursor: pointer;">BACK TO STORE</button>
         </div>`;
     } else { 
       alert("Erreur lors de l'envoi."); 
@@ -1386,8 +1388,8 @@ document.getElementById("finalOrderForm").addEventListener("submit", async funct
     submitBtn.disabled = false;
   }
 });
-
 </script>
+
 
 </body>
 </html>
