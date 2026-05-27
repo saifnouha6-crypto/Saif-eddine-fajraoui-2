@@ -1325,13 +1325,23 @@ textarea.input-field{
   </script>
 <script>
 document.getElementById("finalOrderForm").addEventListener("submit", async function(e){
-  e.preventDefault();
+  e.preventDefault(); // يمنع إعادة تحميل الصفحة
 
-  const nom = document.getElementById("inputName").value;
-  const phone = document.getElementById("inputPhone").value;
-  const gov = document.getElementById("selectGouvernorat").value;
-  const details = document.getElementById("inputAddress").value;
-  const total = document.getElementById("checkoutTotalDisplay").innerText;
+  // 1. إجراء التحقق (Validation)
+  let name = document.getElementById('inputName').value.trim();
+  let phone = document.getElementById('inputPhone').value.trim();
+  let gov = document.getElementById('selectGouvernorat').value;
+  let address = document.getElementById('inputAddress').value.trim();
+
+  if(name.length < 5) { alert("Veuillez saisir votre nom et prénom complets."); return; }
+  if(phone.length !== 8 || isNaN(phone)) { alert("Erreur: Le numéro de téléphone doit contenir exactement 8 chiffres."); return; }
+  if(!gov) { alert("Veuillez sélectionner votre Gouvernorat."); return; }
+  if(address.length < 8) { alert("Veuillez préciser votre adresse de livraison."); return; }
+
+  // 2. إذا نجح التحقق، نبدأ الإرسال
+  const submitBtn = this.querySelector('button[type="submit"]');
+  submitBtn.innerText = "Envoi en cours...";
+  submitBtn.disabled = true;
 
   const formData = new FormData(this);
   const data = {};
@@ -1345,6 +1355,28 @@ document.getElementById("finalOrderForm").addEventListener("submit", async funct
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(data)
     });
+    const json = await res.json();
+    
+    if(json.success) {
+      document.getElementById("checkoutView").innerHTML = `
+        <div style="padding:40px 25px;text-align:center;min-height:80vh;">
+          <div style="font-size: 50px; margin-bottom: 20px;">✅</div>
+          <h1>Merci !</h1>
+          <p>Votre commande a été envoyée avec succès.</p>
+          <button onclick="location.reload()" style="margin-top:20px; background:black; color:white; padding:15px 30px; border:none; cursor:pointer;">RETOUR À L'ACCUEIL</button>
+        </div>`;
+    } else { 
+      alert("Erreur lors de l'envoi."); 
+      submitBtn.innerText = "Confirmer Ma Commande (تأكيد الطلب)";
+      submitBtn.disabled = false;
+    }
+  } catch(err) { 
+    alert("Connexion impossible."); 
+    submitBtn.innerText = "Confirmer Ma Commande (تأكيد الطلب)";
+    submitBtn.disabled = false;
+  }
+});
+
     const json = await res.json();
     if(json.success) {
       document.getElementById("checkoutView").innerHTML = `
