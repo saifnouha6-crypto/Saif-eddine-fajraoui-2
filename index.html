@@ -1323,14 +1323,18 @@ textarea.input-field{
       return true;
     }
   </script>
-  <script>
+<script>
 document
 .getElementById("finalOrderForm")
-.addEventListener("submit", function(e){
+.addEventListener("submit", function(){
 
-e.preventDefault();
+setTimeout(() => {
 
+let nom = document.getElementById("inputName").value;
+let phone = document.getElementById("inputPhone").value;
+let gov = document.getElementById("selectGouvernorat").value;
 let details = document.getElementById("inputAddress").value;
+let total = document.getElementById("checkoutTotalDisplay").innerText;
 
 document.getElementById("checkoutView").innerHTML = `
 
@@ -1357,15 +1361,30 @@ Votre commande a été envoyée avec succès.
 
 <div style="
 background:#f5f5f5;
-padding:20px;
+padding:25px;
 border-radius:10px;
 margin-bottom:30px;
 font-size:16px;
-line-height:1.7;
+line-height:1.9;
+text-align:left;
 word-break:break-word;
 ">
-<b>Détail Adresse :</b><br><br>
-${details}
+
+<b>👤 Nom :</b><br>
+${nom}<br><br>
+
+<b>📞 Téléphone :</b><br>
+${phone}<br><br>
+
+<b>📍 Gouvernorat :</b><br>
+${gov}<br><br>
+
+<b>🏠 Adresse :</b><br>
+${details}<br><br>
+
+<b>💰 Total :</b><br>
+${total}
+
 </div>
 
 <button onclick="location.reload()" style="
@@ -1383,7 +1402,10 @@ BACK TO STORE
 </button>
 
 </div>
+
 `;
+
+}, 1000);
 
 });
 </script>
