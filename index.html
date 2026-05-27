@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FAJRAOUI STORE | Boutique Officielle</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
@@ -24,7 +24,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Montserrat', 'Cairo', sans-serif;
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -577,33 +577,6 @@
   }
   .site-menu li a:hover { opacity: 0.5; }
 
-  /* 🔹 زر الصعود للأعلى الدائري الفخم */
-  .top-scroll-btn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color: var(--bg-white);
-    color: var(--text-black);
-    border: 1px solid var(--border-color);
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 11px;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-    z-index: 99;
-    opacity: 0;
-    visibility: hidden;
-    transition: var(--transition-smooth);
-  }
-  .top-scroll-btn.show { opacity: 1; visibility: visible; }
-  .top-scroll-btn span { font-size: 7px; font-weight: 700; text-transform: uppercase; margin-top: 1px; }
-  .top-scroll-btn:hover { background-color: var(--bg-light); transform: translateY(-3px); }
-
   /* تعتيم الخلفية الفاخر */
   .overlay {
     position: fixed;
@@ -731,8 +704,7 @@
       <button class="cart-close" onclick="toggleCartSidebar()">×</button>
     </div>
     
-    <div class="cart-items-container" id="cartItemsList">
-    </div>
+    <div class="cart-items-container" id="cartItemsList"></div>
 
     <div class="cart-footer">
       <div class="subtotal-row">
@@ -752,13 +724,14 @@
     </div>
 
     <h2 class="checkout-section-title">Contact Information</h2>
-    <form id="finalOrderForm">
+    <form id="finalOrderForm" action="https://api.web3forms.com/submit" method="POST">
       <input type="hidden" name="access_key" value="4c777645-d0ba-461d-af1f-3e904c833bb2">
       <input type="hidden" name="Détails du Panier" id="hiddenCartDetails">
       <input type="hidden" name="Total Net" id="hiddenTotalField">
 
       <div class="checkout-form">
-        <input type="text" name="Contact_Email_ou_Tel" class="input-field" placeholder="Email or mobile phone number" required>
+        <input type="text" name="Contact_Nom_Prenom" class="input-field" placeholder="Nom et Prénom" required>
+        <input type="tel" name="Contact_Telephone" class="input-field" placeholder="Numéro de Téléphone" required>
         
         <div class="checkbox-group">
           <input type="checkbox" id="newsOffers" name="Inscrire_aux_Offres" checked>
@@ -770,134 +743,78 @@
         <input type="text" value="Tunisia" class="input-field" readonly style="background-color: #f5f5f5; color: #555; cursor: not-allowed; font-weight: 500;">
         
         <div class="form-row">
-          <input type="text" name="Prénom" class="input-field" placeholder="First name" required>
-          <input type="text" name="Nom" class="input-field" placeholder="Last name" required>
+          <select name="Gouvernorat" class="input-field" required style="background-color: #fff;">
+            <option value="" disabled selected>Gouvernorat (الولاية)</option>
+            <option value="Tunis">Tunis</option>
+            <option value="Ariana">Ariana</option>
+            <option value="Ben Arous">Ben Arous</option>
+            <option value="Manouba">Manouba</option>
+            <option value="Nabeul">Nabeul</option>
+            <option value="Zaghouan">Zaghouan</option>
+            <option value="Bizerte">Bizerte</option>
+            <option value="Beja">Béja</option>
+            <option value="Jendouba">Jendouba</option>
+            <option value="Le Kef">Le Kef</option>
+            <option value="Siliana">Siliana</option>
+            <option value="Sousse">Sousse</option>
+            <option value="Monastir">Monastir</option>
+            <option value="Mahdia">Mahdia</option>
+            <option value="Sfax">Sfax</option>
+            <option value="Kairouan">Kairouan</option>
+            <option value="Kasserine">Kasserine</option>
+            <option value="Sidi Bouzid">Sidi Bouzid</option>
+            <option value="Gabes">Gabès</option>
+            <option value="Medenine">Médenine</option>
+            <option value="Tataouine">Tataouine</option>
+            <option value="Gafsa">Gafsa</option>
+            <option value="Tozeur">Tozeur</option>
+            <option value="Kebili">Kébili</option>
+          </select>
+          <input type="text" name="Ville_Adresse" class="input-field" placeholder="Adresse complète (البيت، الشارع...)" required>
         </div>
 
-        <select name="Gouvernorat_Tunisie" class="input-field" required>
-          <option value="" disabled selected>Choisir le gouvernorat (الولاية)</option>
-          <option value="Tunis">Tunis (تونس)</option>
-          <option value="Ariana">Ariana (أريانة)</option>
-          <option value="Ben Arous">Ben Arous (بن عروس)</option>
-          <option value="Manouba">Manouba (منوبة)</option>
-          <option value="Sousse">Sousse (سوسة)</option>
-          <option value="Monastir">Monastir (المنستير)</option>
-          <option value="Mahdia">Mahdia (المهدية)</option>
-          <option value="Sfax">Sfax (صفاقس)</option>
-          <option value="Bizerte">Bizerte (بنزرت)</option>
-          <option value="Nabeul">Nabeul (نابل)</option>
-          <option value="Beja">Béja (باجة)</option>
-          <option value="Jendouba">Jendouba (جندوبة)</option>
-          <option value="Le Kef">Le Kef (الكاف)</option>
-          <option value="Siliana">Siliana (سليانة)</option>
-          <option value="Kairouan">Kairouan (القيروان)</option>
-          <option value="Sidi Bouzid">Sidi Bouzid (سيدي بوزيد)</option>
-          <option value="Kasserine">Kasserine (القصرين)</option>
-          <option value="Gafsa">Gafsa (قفصة)</option>
-          <option value="Tozeur">Tozeur (توزر)</option>
-          <option value="Kebili">Kébili (قبلي)</option>
-          <option value="Gabes">Gabès (قابس)</option>
-          <option value="Medenine">Médenine (مدنين)</option>
-          <option value="Tataouine">Tataouine (تطاوين)</option>
-          <option value="Zaghouan">Zaghouan (زغوان)</option>
-        </select>
-
-        <input type="text" name="Adresse_Ligne_Exacte" class="input-field" placeholder="Address (Cité, Rue, Appartement...)" required>
-        
-        <div class="form-row">
-          <input type="text" name="Code_Postal" class="input-field" placeholder="Postal code (optional)">
-          <input type="tel" name="Tel_Additionnel" class="input-field" placeholder="Phone (Alternative)">
-        </div>
-
-        <button type="submit" class="place-order-btn" id="placeOrderBtn">Valider la commande ✦</button>
+        <button type="submit" class="place-order-btn">Place Order (تأكيد الطلب)</button>
       </div>
     </form>
 
     <div class="back-to-store-link">
-      <a href="#" onclick="showStoreView()"><i class="fa-solid fa-arrow-left" style="margin-right: 5px;"></i> Retour au magasin</a>
+      <a href="#" onclick="showStoreView(); return false;">← Back to store</a>
     </div>
   </main>
 
-  <div class="top-scroll-btn" id="topScrollBtn" onclick="scrollToTop()">
-    <i class="fa-solid fa-chevron-up"></i>
-    <span>Top</span>
-  </div>
-
   <footer>
-    <p>© 2026 FAJRAOUI STORE — ALL RIGHTS RESERVED.</p>
+    <p>&copy; 2026 FAJRAOUI STORE. All Rights Reserved.</p>
   </footer>
 
   <script>
     let cart = [];
-
-    function toggleSiteSidebar() {
-      document.getElementById('siteSidebar').classList.toggle('active');
-      document.getElementById('pageOverlay').classList.toggle('active');
-    }
 
     function toggleCartSidebar() {
       document.getElementById('cartSidebar').classList.toggle('active');
       document.getElementById('pageOverlay').classList.toggle('active');
     }
 
+    function toggleSiteSidebar() {
+      document.getElementById('siteSidebar').classList.toggle('active');
+      document.getElementById('pageOverlay').classList.toggle('active');
+    }
+
     function closeAllPanels() {
-      document.getElementById('siteSidebar').classList.remove('active');
       document.getElementById('cartSidebar').classList.remove('active');
+      document.getElementById('siteSidebar').classList.remove('active');
       document.getElementById('pageOverlay').classList.remove('active');
     }
 
     function addToCart(name, price, img, size) {
-      const existingItem = cart.find(item => item.name === name);
+      let existingItem = cart.find(item => item.name === name && item.size === size);
       if (existingItem) {
-        existingItem.qty += 1;
+        existingItem.qty++;
       } else {
         cart.push({ name, price, img, size, qty: 1 });
       }
-      updateCartDOM();
-      toggleCartSidebar();
-    }
-
-    function updateCartDOM() {
-      const listContainer = document.getElementById('cartItemsList');
-      const headerCartCount = document.getElementById('headerCartCount');
-      const cartSubtotalValue = document.getElementById('cartSubtotalValue');
-      
-      listContainer.innerHTML = '';
-      let total = 0;
-      let totalItems = 0;
-
-      cart.forEach((item, index) => {
-        total += item.price * item.qty;
-        totalItems += item.qty;
-
-        listContainer.innerHTML += `
-          <div class="cart-item">
-            <div class="cart-item-img"><img src="${item.img}" alt="${item.name}"></div>
-            <div class="cart-item-details">
-              <div>
-                <div class="cart-item-title">${item.name}</div>
-                <div class="cart-item-size">Size: ${item.size}</div>
-              </div>
-              <div class="cart-item-qty-control">
-                <button onclick="changeQty(${index}, -1)">-</button>
-                <span>${item.qty}</span>
-                <button onclick="changeQty(${index}, 1)">+</button>
-              </div>
-              <div class="cart-item-price">${(item.price * item.qty).toFixed(3)} DT</div>
-            </div>
-            <button class="cart-item-remove" onclick="removeCartItem(${index})"><i class="fa-solid fa-trash-can"></i></button>
-          </div>
-        `;
-      });
-
-      headerCartCount.innerText = totalItems;
-      cartSubtotalValue.innerText = total.toFixed(3) + " DT";
-      
-      document.getElementById('checkoutTotalDisplay').innerText = total.toFixed(3) + " DT";
-      document.getElementById('hiddenTotalField').value = total.toFixed(3) + " DT";
-      
-      let itemsString = cart.map(i => `${i.name} [Size: ${i.size}] (x${i.qty})`).join(' | ');
-      document.getElementById('hiddenCartDetails').value = itemsString;
+      updateCartUI();
+      document.getElementById('cartSidebar').classList.add('active');
+      document.getElementById('pageOverlay').classList.add('active');
     }
 
     function changeQty(index, delta) {
@@ -905,17 +822,57 @@
       if (cart[index].qty <= 0) {
         cart.splice(index, 1);
       }
-      updateCartDOM();
+      updateCartUI();
     }
 
-    function removeCartItem(index) {
+    function removeItem(index) {
       cart.splice(index, 1);
-      updateCartDOM();
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      let cartCount = 0;
+      let subtotal = 0;
+      let cartItemsHTML = '';
+      let hiddenDetailsText = '';
+
+      cart.forEach((item, index) => {
+        cartCount += item.qty;
+        let itemTotal = item.price * item.qty;
+        subtotal += itemTotal;
+
+        hiddenDetailsText += `${item.name} [Size: ${item.size}] (x${item.qty}) - ${itemTotal.toFixed(3)} DT \n`;
+
+        cartItemsHTML += `
+          <div class="cart-item">
+            <div class="cart-item-img"><img src="${item.img}" alt="${item.name}"></div>
+            <div class="cart-item-details">
+              <div class="cart-item-title">${item.name}</div>
+              <div class="cart-item-size">Size: ${item.size}</div>
+              <div class="cart-item-qty-control">
+                <button onclick="changeQty(${index}, -1)">-</button>
+                <span>${item.qty}</span>
+                <button onclick="changeQty(${index}, 1)">+</button>
+              </div>
+            </div>
+            <div class="cart-item-price">${itemTotal.toFixed(3)} DT</div>
+            <button class="cart-item-remove" onclick="removeItem(${index})"><i class="fa-solid fa-trash-can"></i></button>
+          </div>
+        `;
+      });
+
+      document.getElementById('headerCartCount').innerText = cartCount;
+      document.getElementById('cartSubtotalValue').innerText = subtotal.toFixed(3) + ' DT';
+      document.getElementById('checkoutTotalDisplay').innerText = subtotal.toFixed(3) + ' DT';
+      document.getElementById('cartItemsList').innerHTML = cartItemsHTML;
+      
+      document.getElementById('hiddenCartDetails').value = hiddenDetailsText;
+      document.getElementById('hiddenTotalField').value = subtotal.toFixed(3) + ' DT';
     }
 
     function goToCheckout() {
-      if (cart.length === 0) {
-        alert("Votre panier est vide.");
+      if(cart.length === 0) {
+        alert("Votre panier est vide!");
         return;
       }
       closeAllPanels();
@@ -929,51 +886,8 @@
       document.getElementById('storeView').style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
-    const topScrollBtn = document.getElementById('topScrollBtn');
-    window.onscroll = function() {
-      if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
-        topScrollBtn.classList.add('show');
-      } else {
-        topScrollBtn.classList.remove('show');
-      }
-    };
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    const finalForm = document.getElementById('finalOrderForm');
-    const placeOrderBtn = document.getElementById('placeOrderBtn');
-
-    finalForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      placeOrderBtn.disabled = true;
-      placeOrderBtn.innerText = "TRAITEMENT EN COURS... ✦";
-
-      const formData = new FormData(finalForm);
-      fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: formData
-      })
-      .then(async (response) => {
-        let res = await response.json();
-        if (res.success) {
-          alert("Félicitations ! Votre commande a été validée.");
-          cart = [];
-          updateCartDOM();
-          finalForm.reset();
-          showStoreView();
-        } else {
-          alert("Erreur: " + res.message);
-        }
-      })
-      .catch(error => { alert("Erreur réseau."); })
-      .then(() => {
-        placeOrderBtn.disabled = false;
-        placeOrderBtn.innerText = "Valider la commande ✦";
-      });
-    });
   </script>
 </body>
 </html>
+
 
