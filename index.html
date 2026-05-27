@@ -152,7 +152,7 @@
     font-weight: 500;
   }
 
-  /* 🔹 شبكة المنتجات (منتجين في كل صف متناسق تماماً على الموبايل) */
+  /* 🔹 شبكة المنتجات */
   .products-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -167,20 +167,6 @@
     display: flex;
     flex-direction: column;
     position: relative;
-  }
-
-  .product-badge {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    font-size: 9px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    background-color: var(--text-black);
-    color: var(--bg-white);
-    padding: 4px 8px;
-    z-index: 2;
   }
 
   .product-image-wrapper {
@@ -244,14 +230,7 @@
     padding-left: 4px;
   }
 
-  .add-to-cart-btn.sold-out {
-    color: #b8b8b8;
-    border-color: #e0e0e0;
-    cursor: not-allowed;
-  }
-  .add-to-cart-btn.sold-out:hover { padding-left: 0; }
-
-  /* 🔹 لوحة العربة الجانبية الاحترافية الفاخرة (Slide-out Cart) */
+  /* 🔹 لوحة العربة الجانبية الاحترافية الفاخرة */
   .cart-sidebar {
     position: fixed;
     top: 0;
@@ -266,9 +245,7 @@
     flex-direction: column;
     transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .cart-sidebar.active {
-    right: 0;
-  }
+  .cart-sidebar.active { right: 0; }
 
   .cart-header {
     display: flex;
@@ -427,7 +404,7 @@
   .checkout-btn:hover { opacity: 0.9; }
   .checkout-btn:active { transform: scale(0.99); }
 
-  /* 🔹 صفحة الدفع الاحترافية الكاملة (Checkout View - الخطوة 3) */
+  /* 🔹 صفحة الدفع الاحترافية الكاملة */
   .checkout-view {
     display: none;
     max-width: 580px;
@@ -482,9 +459,7 @@
     background-color: var(--bg-white);
     transition: border-color 0.3s;
   }
-  .input-field:focus {
-    border-color: var(--text-black);
-  }
+  .input-field:focus { border-color: var(--text-black); }
 
   .checkbox-group {
     display: flex;
@@ -495,11 +470,7 @@
     color: #444;
     margin: 4px 0;
   }
-  .checkbox-group input {
-    width: 15px;
-    height: 15px;
-    accent-color: var(--text-black);
-  }
+  .checkbox-group input { width: 15px; height: 15px; accent-color: var(--text-black); }
 
   .place-order-btn {
     width: 100%;
@@ -517,12 +488,8 @@
     transition: opacity 0.3s, transform 0.2s;
   }
   .place-order-btn:hover { opacity: 0.9; }
-  .place-order-btn:active { transform: scale(0.99); }
 
-  .back-to-store-link {
-    text-align: center;
-    margin-top: 25px;
-  }
+  .back-to-store-link { text-align: center; margin-top: 25px; }
   .back-to-store-link a {
     color: var(--text-muted);
     font-size: 12px;
@@ -532,9 +499,8 @@
     font-weight: 600;
     transition: color 0.3s;
   }
-  .back-to-store-link a:hover { color: var(--text-black); }
 
-  /* 🔹 قائمة الموقع الجانبية الفاخرة */
+  /* 🔹 قائمة الموقع الجانبية */
   .site-sidebar {
     position: fixed;
     top: 0;
@@ -550,34 +516,38 @@
     transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .site-sidebar.active { left: 0; }
-  
-  .site-sidebar-close {
-    align-self: flex-end;
-    background: none;
-    border: none;
-    font-size: 26px;
-    cursor: pointer;
-    margin-bottom: 40px;
-  }
+  .site-sidebar-close { align-self: flex-end; background: none; border: none; font-size: 26px; cursor: pointer; margin-bottom: 40px; }
 
-  .site-menu {
-    list-style: none;
+  .site-menu { list-style: none; display: flex; flex-direction: column; gap: 24px; }
+  .site-menu li a { color: var(--text-black); text-decoration: none; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
+
+  /* 🔹 زر الصعود للأعلى الدائري الفخم */
+  .top-scroll-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: var(--bg-white);
+    color: var(--text-black);
+    border: 1px solid var(--border-color);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    justify-content: center;
+    align-items: center;
+    font-size: 11px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition-smooth);
   }
-  .site-menu li a {
-    color: var(--text-black);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    transition: opacity 0.3s;
-  }
-  .site-menu li a:hover { opacity: 0.5; }
+  .top-scroll-btn.show { opacity: 1; visibility: visible; }
+  .top-scroll-btn span { font-size: 7px; font-weight: 700; text-transform: uppercase; margin-top: 1px; }
+  .top-scroll-btn:hover { background-color: var(--bg-light); transform: translateY(-3px); }
 
-  /* تعتيم الخلفية الفاخر */
   .overlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -589,43 +559,18 @@
   }
   .overlay.active { opacity: 1; pointer-events: auto; }
 
-  footer {
-    text-align: center;
-    padding: 50px 20px;
-    border-top: 1px solid var(--border-color);
-    color: var(--text-muted);
-    font-size: 10px;
-    letter-spacing: 1.5px;
-    font-weight: 500;
-  }
+  footer { text-align: center; padding: 50px 20px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 10px; letter-spacing: 1.5px; }
 
-  /* 🎬 حركات الأنيميشن */
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes slideInShort {
-    from { opacity: 0; transform: translateX(15px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideInShort { from { opacity: 0; transform: translateX(15px); } to { opacity: 1; transform: translateX(0); } }
 
-  /* 💻 شاشات التابلت والكمبيوتر للتجاوب الكامل */
-  @media (min-width: 768px) {
-    .products-grid { grid-template-columns: repeat(3, 1fr); gap: 25px; }
-    .product-image-wrapper { height: 300px; }
-    .hero-section { padding: 60px 5% 40px; }
-    .hero-section h1 { font-size: 42px; }
-  }
-  @media (min-width: 1024px) {
-    .products-grid { grid-template-columns: repeat(4, 1fr); gap: 30px; }
-    .product-image-wrapper { height: 340px; }
-  }
+  @media (min-width: 768px) { .products-grid { grid-template-columns: repeat(2, 1fr); gap: 25px; } .product-image-wrapper { height: 300px; } .hero-section h1 { font-size: 42px; } }
+  @media (min-width: 1024px) { .products-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; } .product-image-wrapper { height: 340px; } }
 </style>
 </head>
 <body>
 
   <div class="overlay" id="pageOverlay" onclick="closeAllPanels()"></div>
-  
   <div class="announcement-bar">Livraison Gratuite sur toute la Tunisie</div>
 
   <header>
@@ -675,11 +620,10 @@
       </div>
 
       <div class="product-card">
-        <span class="product-badge">Sold Out</span>
-        <div class="product-image-wrapper" style="opacity: 0.55;"><img src="1000088937.jpg" alt="Pureté Vert Émeraude"></div>
-        <h3 class="product-title" style="color: #999;">Pureté Vert Émeraude</h3>
-        <div class="product-price" style="color: #999;">130.000 DT</div>
-        <button class="add-to-cart-btn sold-out" disabled>Sold Out</button>
+        <div class="product-image-wrapper"><img src="1000088937.jpg" alt="Pureté Vert Émeraude"></div>
+        <h3 class="product-title">Pureté Vert Émeraude</h3>
+        <div class="product-price">130.000 DT</div>
+        <button class="add-to-cart-btn" onclick="addToCart('Pureté Vert Émeraude', 130.000, '1000088937.jpg', 'M')">Add to Cart</button>
       </div>
 
       <div class="product-card">
@@ -688,39 +632,21 @@
         <div class="product-price">120.000 DT</div>
         <button class="add-to-cart-btn" onclick="addToCart('Luxe Rouge Rubis', 120.000, '1000088938.jpg', 'L')">Add to Cart</button>
       </div>
-
-      <div class="product-card">
-        <div class="product-image-wrapper"><img src="1000088939.jpg" alt="Northern Aura Premium"></div>
-        <h3 class="product-title">Northern Aura Premium</h3>
-        <div class="product-price">120.000 DT</div>
-        <button class="add-to-cart-btn" onclick="addToCart('Northern Aura Premium', 120.000, '1000088939.jpg', 'Unique Size')">Add to Cart</button>
-      </div>
     </section>
   </main>
 
   <div class="cart-sidebar" id="cartSidebar">
-    <div class="cart-header">
-      <h2>Your Cart</h2>
-      <button class="cart-close" onclick="toggleCartSidebar()">×</button>
-    </div>
-    
+    <div class="cart-header"><h2>Your Cart</h2><button class="cart-close" onclick="toggleCartSidebar()">×</button></div>
     <div class="cart-items-container" id="cartItemsList"></div>
-
     <div class="cart-footer">
-      <div class="subtotal-row">
-        <span>Subtotal</span>
-        <span id="cartSubtotalValue">0.000 DT</span>
-      </div>
+      <div class="subtotal-row"><span>Subtotal</span><span id="cartSubtotalValue">0.000 DT</span></div>
       <button class="checkout-btn" onclick="goToCheckout()">Check Out</button>
     </div>
   </div>
 
   <main class="checkout-view" id="checkoutView">
     <div class="checkout-summary-box">
-      <div class="summary-header">
-        <span>Order summary</span>
-        <span id="checkoutTotalDisplay">0.000 DT</span>
-      </div>
+      <div class="summary-header"><span>Order summary</span><span id="checkoutTotalDisplay">0.000 DT</span></div>
     </div>
 
     <h2 class="checkout-section-title">Contact Information</h2>
@@ -739,155 +665,82 @@
         </div>
 
         <h2 class="checkout-section-title" style="margin-top: 20px; margin-bottom: 4px;">Delivery Address</h2>
-        
         <input type="text" value="Tunisia" class="input-field" readonly style="background-color: #f5f5f5; color: #555; cursor: not-allowed; font-weight: 500;">
         
         <div class="form-row">
-          <select name="Gouvernorat" class="input-field" required style="background-color: #fff;">
+          <select name="Gouvernorat" class="input-field" required>
             <option value="" disabled selected>Gouvernorat (الولاية)</option>
-            <option value="Tunis">Tunis</option>
-            <option value="Ariana">Ariana</option>
-            <option value="Ben Arous">Ben Arous</option>
-            <option value="Manouba">Manouba</option>
-            <option value="Nabeul">Nabeul</option>
-            <option value="Zaghouan">Zaghouan</option>
-            <option value="Bizerte">Bizerte</option>
-            <option value="Beja">Béja</option>
-            <option value="Jendouba">Jendouba</option>
-            <option value="Le Kef">Le Kef</option>
-            <option value="Siliana">Siliana</option>
-            <option value="Sousse">Sousse</option>
-            <option value="Monastir">Monastir</option>
-            <option value="Mahdia">Mahdia</option>
-            <option value="Sfax">Sfax</option>
-            <option value="Kairouan">Kairouan</option>
-            <option value="Kasserine">Kasserine</option>
-            <option value="Sidi Bouzid">Sidi Bouzid</option>
-            <option value="Gabes">Gabès</option>
-            <option value="Medenine">Médenine</option>
-            <option value="Tataouine">Tataouine</option>
-            <option value="Gafsa">Gafsa</option>
-            <option value="Tozeur">Tozeur</option>
-            <option value="Kebili">Kébili</option>
+            <option value="Tunis">Tunis</option><option value="Ariana">Ariana</option><option value="Ben Arous">Ben Arous</option><option value="Manouba">Manouba</option><option value="Nabeul">Nabeul</option><option value="Zaghouan">Zaghouan</option><option value="Bizerte">Bizerte</option><option value="Beja">Béja</option><option value="Jendouba">Jendouba</option><option value="Le Kef">Le Kef</option><option value="Siliana">Siliana</option><option value="Sousse">Sousse</option><option value="Monastir">Monastir</option><option value="Mahdia">Mahdia</option><option value="Sfax">Sfax</option><option value="Kairouan">Kairouan</option><option value="Kasserine">Kasserine</option><option value="Sidi Bouzid">Sidi Bouzid</option><option value="Gabes">Gabès</option><option value="Medenine">Médenine</option><option value="Tataouine">Tataouine</option><option value="Gafsa">Gafsa</option><option value="Tozeur">Tozeur</option><option value="Kebili">Kébili</option>
           </select>
-          <input type="text" name="Ville_Adresse" class="input-field" placeholder="Adresse complète (البيت، الشارع...)" required>
+          <input type="text" name="Ville_Adresse" class="input-field" placeholder="Adresse complète" required>
         </div>
-
         <button type="submit" class="place-order-btn">Place Order (تأكيد الطلب)</button>
       </div>
     </form>
-
-    <div class="back-to-store-link">
-      <a href="#" onclick="showStoreView(); return false;">← Back to store</a>
-    </div>
+    <div class="back-to-store-link"><a href="#" onclick="showStoreView(); return false;">← Back to store</a></div>
   </main>
 
-  <footer>
-    <p>&copy; 2026 FAJRAOUI STORE. All Rights Reserved.</p>
-  </footer>
+  <button class="top-scroll-btn" id="scrollTopBtn" onclick="scrollToTop()"><i class="fa-solid fa-arrow-up"></i><span>TOP</span></  <button class="top-scroll-btn" id="scrollTopBtn" onclick="scrollToTop()"><i class="fa-solid fa-arrow-up"></i><span>TOP</span></button>
+
+  <footer><p>&copy; 2026 FAJRAOUI STORE. All Rights Reserved.</p></footer>
 
   <script>
     let cart = [];
 
-    function toggleCartSidebar() {
-      document.getElementById('cartSidebar').classList.toggle('active');
-      document.getElementById('pageOverlay').classList.toggle('active');
-    }
+    window.onscroll = function() {
+      let btn = document.getElementById("scrollTopBtn");
+      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        btn.classList.add("show");
+      } else {
+        btn.classList.remove("show");
+      }
+    };
 
-    function toggleSiteSidebar() {
-      document.getElementById('siteSidebar').classList.toggle('active');
-      document.getElementById('pageOverlay').classList.toggle('active');
-    }
-
-    function closeAllPanels() {
-      document.getElementById('cartSidebar').classList.remove('active');
-      document.getElementById('siteSidebar').classList.remove('active');
-      document.getElementById('pageOverlay').classList.remove('active');
-    }
+    function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    function toggleCartSidebar() { document.getElementById('cartSidebar').classList.toggle('active'); document.getElementById('pageOverlay').classList.toggle('active'); }
+    function toggleSiteSidebar() { document.getElementById('siteSidebar').classList.toggle('active'); document.getElementById('pageOverlay').classList.toggle('active'); }
+    function closeAllPanels() { document.getElementById('cartSidebar').classList.remove('active'); document.getElementById('siteSidebar').classList.remove('active'); document.getElementById('pageOverlay').classList.remove('active'); }
 
     function addToCart(name, price, img, size) {
       let existingItem = cart.find(item => item.name === name && item.size === size);
-      if (existingItem) {
-        existingItem.qty++;
-      } else {
-        cart.push({ name, price, img, size, qty: 1 });
-      }
+      if (existingItem) { existingItem.qty++; } else { cart.push({ name, price, img, size, qty: 1 }); }
       updateCartUI();
-      document.getElementById('cartSidebar').classList.add('active');
-      document.getElementById('pageOverlay').classList.add('active');
+      toggleCartSidebar();
     }
 
-    function changeQty(index, delta) {
-      cart[index].qty += delta;
-      if (cart[index].qty <= 0) {
-        cart.splice(index, 1);
-      }
-      updateCartUI();
-    }
-
-    function removeItem(index) {
-      cart.splice(index, 1);
-      updateCartUI();
-    }
+    function changeQty(index, delta) { cart[index].qty += delta; if (cart[index].qty <= 0) { cart.splice(index, 1); } updateCartUI(); }
+    function removeItem(index) { cart.splice(index, 1); updateCartUI(); }
 
     function updateCartUI() {
-      let cartCount = 0;
-      let subtotal = 0;
-      let cartItemsHTML = '';
-      let hiddenDetailsText = '';
-
+      let cartCount = 0, subtotal = 0, cartItemsHTML = '', hiddenDetailsText = '';
       cart.forEach((item, index) => {
-        cartCount += item.qty;
-        let itemTotal = item.price * item.qty;
-        subtotal += itemTotal;
-
+        cartCount += item.qty; let itemTotal = item.price * item.qty; subtotal += itemTotal;
         hiddenDetailsText += `${item.name} [Size: ${item.size}] (x${item.qty}) - ${itemTotal.toFixed(3)} DT \n`;
-
         cartItemsHTML += `
           <div class="cart-item">
-            <div class="cart-item-img"><img src="${item.img}" alt="${item.name}"></div>
+            <div class="cart-item-img"><img src="${item.img}"></div>
             <div class="cart-item-details">
               <div class="cart-item-title">${item.name}</div>
               <div class="cart-item-size">Size: ${item.size}</div>
-              <div class="cart-item-qty-control">
-                <button onclick="changeQty(${index}, -1)">-</button>
-                <span>${item.qty}</span>
-                <button onclick="changeQty(${index}, 1)">+</button>
-              </div>
+              <div class="cart-item-qty-control"><button onclick="changeQty(${index}, -1)">-</button><span>${item.qty}</span><button onclick="changeQty(${index}, 1)">+</button></div>
             </div>
             <div class="cart-item-price">${itemTotal.toFixed(3)} DT</div>
             <button class="cart-item-remove" onclick="removeItem(${index})"><i class="fa-solid fa-trash-can"></i></button>
-          </div>
-        `;
+          </div>`;
       });
-
       document.getElementById('headerCartCount').innerText = cartCount;
       document.getElementById('cartSubtotalValue').innerText = subtotal.toFixed(3) + ' DT';
       document.getElementById('checkoutTotalDisplay').innerText = subtotal.toFixed(3) + ' DT';
       document.getElementById('cartItemsList').innerHTML = cartItemsHTML;
-      
       document.getElementById('hiddenCartDetails').value = hiddenDetailsText;
       document.getElementById('hiddenTotalField').value = subtotal.toFixed(3) + ' DT';
     }
 
-    function goToCheckout() {
-      if(cart.length === 0) {
-        alert("Votre panier est vide!");
-        return;
-      }
-      closeAllPanels();
-      document.getElementById('storeView').style.display = 'none';
-      document.getElementById('checkoutView').style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function showStoreView() {
-      document.getElementById('checkoutView').style.display = 'none';
-      document.getElementById('storeView').style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    function goToCheckout() { if(cart.length === 0) { alert("Panier vide!"); return; } closeAllPanels(); document.getElementById('storeView').style.display = 'none'; document.getElementById('checkoutView').style.display = 'block'; scrollToTop(); }
+    function showStoreView() { document.getElementById('checkoutView').style.display = 'none'; document.getElementById('storeView').style.display = 'block'; scrollToTop(); }
   </script>
 </body>
 </html>
+
 
 
