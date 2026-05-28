@@ -1529,7 +1529,15 @@ document.getElementById("finalOrderForm").addEventListener("submit", async funct
             <b>💰 Total :</b> ${total}
           </div>
 
-          <button onclick="location.reload()" style="background: black; color: white; border: none; padding: 14px 40px; font-size: 14px; font-weight: bold; border-radius: 5px; cursor: pointer;">BACK TO STORE</button>
+          <button onclick="
+document.getElementById('introScreen').style.display='none';
+document.getElementById('checkoutView').style.display='none';
+document.getElementById('storeView').style.display='block';
+window.scrollTo(0,0);
+"
+style="background: black; color: white; border: none; padding: 14px 40px; font-size: 14px; font-weight: bold; border-radius: 5px; cursor: pointer;">
+BACK TO STORE
+</button>
         </div>`;
     } else { 
       alert("Erreur lors de l'envoi."); 
