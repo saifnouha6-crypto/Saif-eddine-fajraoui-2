@@ -9,6 +9,127 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
+  /* INTRO SCREEN */
+
+#introScreen{
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 999999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: black;
+
+    transition: 1s ease;
+}
+
+.video-slideshow{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.slide{
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    opacity: 0;
+
+    transform: scale(1.1);
+
+    transition:
+    opacity 2s ease,
+    transform 7s ease;
+}
+
+.slide.active{
+    opacity: 1;
+    transform: scale(1);
+}
+
+.intro-overlay{
+    position: absolute;
+    inset: 0;
+
+    background:
+    linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.55),
+        rgba(0,0,0,0.45)
+    );
+}
+
+.intro-content{
+    position: relative;
+
+    width: 85%;
+    max-width: 360px;
+
+    padding: 40px 25px;
+
+    border-radius: 30px;
+
+    background: rgba(255,255,255,0.08);
+
+    backdrop-filter: blur(15px);
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    text-align: center;
+
+    color: white;
+}
+
+.intro-content h1{
+    font-size: 48px;
+    font-weight: 900;
+    margin-bottom: 20px;
+}
+
+#liveClock{
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+.intro-content h2{
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.intro-content p{
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+.intro-content button{
+    border: none;
+    background: white;
+    color: black;
+
+    padding: 15px 35px;
+
+    border-radius: 50px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.hide-intro{
+    opacity: 0;
+    visibility: hidden;
+}
   :root {
     --bg-white: #ffffff;
     --bg-light: #f9f9f9;
@@ -941,6 +1062,39 @@
 </style>
 </head>
 <body>
+  <!-- INTRO SCREEN -->
+
+<div id="introScreen">
+
+    <div class="video-slideshow">
+
+        <img src="1000088935.jpg" class="slide active">
+        <img src="1000088936.jpg" class="slide">
+        <img src="1000088937.jpg" class="slide">
+        <img src="1000088938.jpg" class="slide">
+        <img src="1000088939.jpg" class="slide">
+
+    </div>
+
+    <div class="intro-overlay"></div>
+
+    <div class="intro-content">
+
+        <h1>FAJRAOUI</h1>
+
+        <div id="liveClock"></div>
+
+        <h2>Luxury Store</h2>
+
+        <p>Click to enter</p>
+
+        <button onclick="enterWebsite()">
+            ENTER
+        </button>
+
+    </div>
+
+</div>
 
   <div class="overlay" id="pageOverlay" onclick="closeAllPanels()"></div>
 
@@ -1389,7 +1543,69 @@ document.getElementById("finalOrderForm").addEventListener("submit", async funct
   }
 });
 </script>
+<script>
 
+/* CLOCK */
+
+function updateClock(){
+
+    const now = new Date();
+
+    const options = {
+        weekday:'long',
+        year:'numeric',
+        month:'long',
+        day:'numeric'
+    };
+
+    const date = now.toLocaleDateString('fr-FR', options);
+
+    const time = now.toLocaleTimeString('fr-FR');
+
+    document.getElementById('liveClock').innerHTML = `
+        Tunis, TN<br>
+        ${date}<br>
+        ${time}
+    `;
+}
+
+setInterval(updateClock,1000);
+
+updateClock();
+
+/* ENTER WEBSITE */
+
+function enterWebsite(){
+
+    document
+    .getElementById('introScreen')
+    .classList.add('hide-intro');
+}
+
+/* SLIDESHOW */
+
+const slides = document.querySelectorAll('.slide');
+
+let currentSlide = 0;
+
+function changeSlide(){
+
+    slides[currentSlide]
+    .classList.remove('active');
+
+    currentSlide++;
+
+    if(currentSlide >= slides.length){
+        currentSlide = 0;
+    }
+
+    slides[currentSlide]
+    .classList.add('active');
+}
+
+setInterval(changeSlide, 4000);
+
+</script>
 
 </body>
 </html>
