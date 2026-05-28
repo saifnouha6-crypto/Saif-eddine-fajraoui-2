@@ -1336,7 +1336,7 @@ document.getElementById("finalOrderForm").addEventListener("submit", async funct
   const total = document.getElementById('checkoutTotalDisplay').innerText;
 
   // 2. التحقق من البيانات
-  if(name.length < 5 || phone.length !== 8 || !gov || address.length < 5) {
+  if(name.length < 3 || phone.length !== 8 || !gov || address.length < 2) {
       alert("Veuillez remplir tous les champs correctement.");
       return;
   }
