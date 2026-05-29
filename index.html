@@ -1700,96 +1700,9 @@ function changeSlide(){
 setInterval(changeSlide, 4000);
 
 </script>
-  <script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
 
-const firebaseConfig = {
-
-  apiKey: "AIzaSyAIVlovR5UcXgO3s4QkijzF60rw0O1FeHE",
-
-  authDomain: "saif-nouha-6-e9be9.firebaseapp.com",
-
-  projectId: "saif-nouha-6-e9be9",
-
-  storageBucket: "saif-nouha-6-e9be9.firebasestorage.app",
-
-  messagingSenderId: "610890221434",
-
-  appId: "1:610890221434:web:9dce27ebaa7201aa03b8c3",
-
-  measurementId: "G-FFVENZL1KB"
-
-};
-
-
-
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth(app);
-
-
-
-// REGISTER
-
-window.register = function () {
-
-  const email = document.getElementById("email").value;
-
-  const password = document.getElementById("password").value;
-
-  createUserWithEmailAndPassword(auth, email, password)
-
-    .then((userCredential) => {
-
-      alert("تم إنشاء الحساب بنجاح 🔥");
-
-    })
-
-    .catch((error) => {
-
-      alert(error.message);
-
-    });
-
-};
-
-
-
-// LOGIN
-
-window.login = function () {
-
-  const email = document.getElementById("email").value;
-
-  const password = document.getElementById("password").value;
-
-  signInWithEmailAndPassword(auth, email, password)
-
-    .then((userCredential) => {
-
-      alert("تم تسجيل الدخول 😎");
-
-    })
-
-    .catch((error) => {
-
-      alert(error.message);
-
-    });
-
-};
-
-</script>
-  
 <div id="loginPopup" class="login-popup">
 
   <div class="login-box">
@@ -1828,123 +1741,45 @@ function closeLoginPopup(){
 }
 
 </script>
-  <div id="loginPopup" class="login-popup">
+  
 
-  <div class="login-box">
-
-    <button class="close-login" onclick="closeLoginPopup()">×</button>
-
-    <h2>LOGIN</h2>
-
-    <input type="email" id="email" placeholder="Email">
-
-    <input type="password" id="password" placeholder="Password">
-
-    <button class="login-btn" onclick="login()">
-      LOGIN
-    </button>
-
-    <button class="login-btn" onclick="register()">
-      CREATE ACCOUNT
-    </button>
-
-  </div>
-
-</div>
-  <script>
-
-function openLoginPopup(){
-
-  document.getElementById("loginPopup").style.display = "flex";
-
-}
-
-function closeLoginPopup(){
-
-  document.getElementById("loginPopup").style.display = "none";
-
-}
-
-</script>
-  <script type="module">
-
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
-
   apiKey: "AIzaSyAIVlovR5UcXgO3s4QkijzF60rw0O1FeHE",
-
   authDomain: "saif-nouha-6-e9be9.firebaseapp.com",
-
   projectId: "saif-nouha-6-e9be9",
-
   storageBucket: "saif-nouha-6-e9be9.firebasestorage.app",
-
   messagingSenderId: "610890221434",
-
   appId: "1:610890221434:web:9dce27ebaa7201aa03b8c3"
-
 };
 
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth(app);
 
 window.register = function () {
-
   const email = document.getElementById("email").value;
-
   const password = document.getElementById("password").value;
-
   createUserWithEmailAndPassword(auth, email, password)
-
-  .then(() => {
-
-    alert("Account created successfully 🔥");
-
-  })
-
-  .catch((error) => {
-
-    alert(error.message);
-
-  });
-
+    .then(() => { alert("Account created successfully 🔥"); })
+    .catch((error) => { alert(error.message); });
 };
 
 window.login = function () {
-
   const email = document.getElementById("email").value;
-
   const password = document.getElementById("password").value;
-
   signInWithEmailAndPassword(auth, email, password)
-
-  .then(() => {
-
-    alert("Login successful 😎");
-
-    closeLoginPopup();
-
-  })
-
-  .catch((error) => {
-
-    alert(error.message);
-
-  });
-
+    .then(() => { alert("Login successful 😎"); closeLoginPopup(); })
+    .catch((error) => { alert(error.message); });
 };
-
 </script>
+
 </body>
 </html>
+
+
 
 
 
