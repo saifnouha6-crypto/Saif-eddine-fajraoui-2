@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
 <head>
@@ -1075,7 +1076,9 @@
     -webkit-backdrop-filter: blur(8px);
     display: none;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    overflow-y: auto;
+    padding: 20px 0 40px;
     z-index: 999999;
     animation: fadeInOverlay 0.3s ease;
   }
@@ -1148,16 +1151,17 @@
     flex: 1;
     background: none;
     border: none;
-    padding: 12px 0;
-    font-size: 11px;
+    padding: 12px 5px;
+    font-size: 10px;
     font-weight: 700;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
     cursor: pointer;
     color: #aaa;
     border-bottom: 2px solid transparent;
     margin-bottom: -1px;
     transition: all 0.3s ease;
+    white-space: nowrap;
   }
 
   .login-tab.active {
@@ -1327,6 +1331,39 @@
 
   /* Legacy .login-btn hidden — replaced */
   .login-btn { display: none; }
+
+  .account-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text-black);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 12px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--bg-light);
+    transition: var(--transition-smooth);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+  .account-link:hover {
+    background: var(--text-black);
+    color: white;
+    border-color: var(--text-black);
+  }
+  .account-link i { flex-shrink: 0; font-size: 14px; }
+  .account-link span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 </style>
 </head>
 <body>
@@ -1422,14 +1459,11 @@
     </ul>
     <div class="sidebar-contact-info">
       <div class="sidebar-account-box">
-
-<a href="#" class="account-link" id="loginBtn" onclick="openLoginPopup()">
-    <i class="fa-solid fa-user"></i>
-    <span id="loginBtnText">Login</span>
-
-  </a>
-
-</div>
+        <a href="#" class="account-link" id="loginBtn" onclick="openLoginPopup(); return false;">
+          <i class="fa-solid fa-user"></i>
+          <span id="loginBtnText">Login / Mon Compte</span>
+        </a>
+      </div>
       <h4>Contact Manager</h4>
       <p>Instagram: <a href="https://www.instagram.com/fajraouisaifeddine?igsh=YWNoZ2F3NjVkZTU0" target="_blank">@fajraouisaifeddine</a></p>
       <p>Phone: <a href="tel:40280174">+216 40 280 174</a></p>
@@ -2057,6 +2091,29 @@ if (savedEmail) {
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
