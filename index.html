@@ -1368,8 +1368,7 @@
   }
 </style>
 <!-- EmailJS -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>emailjs.init("OL-1KDNiHdzic0IlD");</script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" onload="emailjs.init('OL-1KDNiHdzic0IlD')"></script>
 </head>
 <body>
   <!-- INTRO SCREEN -->
@@ -2212,6 +2211,13 @@ window.lpSendOTP = function() {
     return;
   }
 
+  // تحقق أن EmailJS محمّل
+  if (typeof emailjs === 'undefined') {
+    errEl.textContent = 'Service not ready. Please refresh the page.';
+    errEl.style.display = 'block';
+    return;
+  }
+
   btn.disabled = true;
   btn.innerHTML = '<span class="lp-spinner"></span> Sending...';
 
@@ -2487,4 +2493,10 @@ if (savedEmail) {
 
 </body>
 </html>
+
+
+
+
+
+
      
