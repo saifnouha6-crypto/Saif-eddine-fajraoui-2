@@ -1368,7 +1368,7 @@
   }
 </style>
 <!-- EmailJS -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" onload="emailjs.init('OL-1KDNiHdzic0IlD')"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" onload="emailjs.init('OL-1KDNiHdzic0llD')"></script>
 </head>
 <body>
   <!-- INTRO SCREEN -->
@@ -2174,7 +2174,7 @@ window.lpSendOTP = function() {
     email:    emailValue,
     passcode: otpCode,
     time:     expTime
-  }, 'OL-1KDNiHdzic0IlD')
+  }, 'OL-1KDNiHdzic0llD')
   .then(() => {
     btn.innerHTML = 'Send Code'; btn.disabled = false;
     document.getElementById('lp-otp-email-display').textContent = emailValue;
@@ -2437,6 +2437,12 @@ if (savedEmail) {
 
 </body>
 </html>
+
+
+
+
+
+
 
 
 
