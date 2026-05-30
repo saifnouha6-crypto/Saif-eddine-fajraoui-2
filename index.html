@@ -1140,6 +1140,8 @@
   .lp-content {
     padding: 48px 40px 40px;
     flex: 1;
+    display: flex;
+    flex-direction: column;
   }
 
   @media (max-width: 480px) {
@@ -1349,8 +1351,21 @@
   .lp-resend.active { color: #111; cursor: pointer; }
   .lp-resend.active:hover { opacity: 0.6; }
 
-  /* New password fields after OTP verified */
-  .lp-new-pass { display: none; margin-top: 4px; }
+  /* Hide main content when forgot/otp shown */
+  .login-box.show-forgot .lp-content { display: none; }
+  .login-box.show-forgot .lp-forgot   { display: block; }
+  .login-box.show-otp    .lp-content  { display: none; }
+  .login-box.show-otp    .lp-otp-page { display: block; }
+
+  /* Forgot & OTP full pages — hidden by default */
+  .lp-forgot-page,
+  .lp-otp-page {
+    display: none;
+    padding: 35px 40px 30px;
+  }
+  @media (max-width: 480px) {
+    .lp-forgot-page, .lp-otp-page { padding: 28px 28px 24px; }
+  }
 </style>
 <!-- EmailJS -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -1993,7 +2008,6 @@ setInterval(changeSlide, 4000);
 
         <div class="lp-timer" id="lp-timer">Code expires in <span id="lp-timer-val">1:30</span></div>
 
-        <!-- New password fields — shown after OTP verified -->
         <div class="lp-new-pass" id="lp-new-pass">
           <label class="lp-label" for="lp-new-password">New Password</label>
           <input class="lp-field" type="password" id="lp-new-password" placeholder="Minimum 6 characters">
@@ -2040,6 +2054,45 @@ setInterval(changeSlide, 4000);
 
     </div><!-- /lp-content -->
 
+    <!-- FORGOT PASSWORD PAGE — مستقلة كاملة -->
+    <div class="lp-forgot-page" id="lp-forgot-page">
+      <a class="lp-back-link" onclick="lpShowSignin()">← Back to Login</a>
+      <h2 class="lp-title">Reset Password</h2>
+      <p class="lp-forgot-note">Enter your email and we'll send you a 6-digit verification code.</p>
+      <label class="lp-label" for="lp-reset-email">Email</label>
+      <input class="lp-field" type="email" id="lp-reset-email" autocomplete="email" placeholder="">
+      <div class="lp-msg lp-err" id="lp-reset-err"></div>
+      <div class="lp-msg lp-ok"  id="lp-reset-ok"></div>
+      <button class="lp-signin-btn" id="lp-reset-btn" onclick="lpSendOTP()">Send Code</button>
+      <a class="lp-create-link" onclick="lpShowSignin()">BACK TO LOGIN</a>
+    </div>
+
+    <!-- OTP PAGE — مستقلة كاملة -->
+    <div class="lp-otp-page" id="lp-otp-page">
+      <a class="lp-back-link" onclick="lpShowForgotPage()">← Change Email</a>
+      <h2 class="lp-title">Enter Code</h2>
+      <p class="lp-otp-info">We sent a 6-digit code to<br><strong id="lp-otp-email-display"></strong></p>
+      <div class="lp-otp-inputs">
+        <input type="number" maxlength="1" class="otp-box" id="otp0" oninput="otpMove(this,0)">
+        <input type="number" maxlength="1" class="otp-box" id="otp1" oninput="otpMove(this,1)">
+        <input type="number" maxlength="1" class="otp-box" id="otp2" oninput="otpMove(this,2)">
+        <input type="number" maxlength="1" class="otp-box" id="otp3" oninput="otpMove(this,3)">
+        <input type="number" maxlength="1" class="otp-box" id="otp4" oninput="otpMove(this,4)">
+        <input type="number" maxlength="1" class="otp-box" id="otp5" oninput="otpMove(this,5)">
+      </div>
+      <div class="lp-timer" id="lp-timer">Code expires in <span id="lp-timer-val">1:30</span></div>
+      <div class="lp-new-pass" id="lp-new-pass" style="display:none;">
+        <label class="lp-label" for="lp-new-password">New Password</label>
+        <input class="lp-field" type="password" id="lp-new-password" placeholder="Minimum 6 characters">
+        <label class="lp-label" for="lp-confirm-password">Confirm Password</label>
+        <input class="lp-field" type="password" id="lp-confirm-password" placeholder="Repeat password">
+      </div>
+      <div class="lp-msg lp-err" id="lp-otp-err"></div>
+      <div class="lp-msg lp-ok"  id="lp-otp-ok"></div>
+      <button class="lp-signin-btn" id="lp-otp-btn" onclick="lpVerifyOTP()">Verify Code</button>
+      <a class="lp-resend" id="lp-resend" onclick="lpResendOTP()">RESEND CODE</a>
+    </div>
+
   </div><!-- /login-box -->
 
 </div><!-- /loginPopup -->
@@ -2065,17 +2118,42 @@ function lpShowSignin() {
   document.getElementById('lp-signin').classList.add('lp-active');
 }
 
-function lpShowForgot() {
-  document.querySelectorAll('.lp-panel').forEach(p => p.classList.remove('lp-active'));
-  document.getElementById('lp-forgot').classList.add('lp-active');
-  const signinEmail = document.getElementById('lp-email').value.trim();
-  if (signinEmail) document.getElementById('lp-reset-email').value = signinEmail;
+function lpHideAllPages() {
+  const box = document.querySelector('.login-box');
+  // Show main content, hide special pages
+  document.querySelector('.lp-content').style.display    = 'flex';
+  document.getElementById('lp-forgot-page').style.display = 'none';
+  document.getElementById('lp-otp-page').style.display    = 'none';
 }
 
-function lpShowOTP() {
-  document.querySelectorAll('.lp-panel').forEach(p => p.classList.remove('lp-active'));
-  document.getElementById('lp-otp').classList.add('lp-active');
+function lpShowForgotPage() {
+  document.querySelector('.lp-content').style.display    = 'none';
+  document.getElementById('lp-forgot-page').style.display = 'block';
+  document.getElementById('lp-otp-page').style.display    = 'none';
+  // pre-fill email
+  const e = document.getElementById('lp-email').value.trim();
+  if (e) document.getElementById('lp-reset-email').value = e;
 }
+
+function lpShowOTPPage() {
+  document.querySelector('.lp-content').style.display    = 'none';
+  document.getElementById('lp-forgot-page').style.display = 'none';
+  document.getElementById('lp-otp-page').style.display    = 'block';
+}
+
+function lpShowSignin() {
+  lpHideAllPages();
+  document.querySelectorAll('.lp-panel').forEach(p => p.classList.remove('lp-active'));
+  document.getElementById('lp-signin').classList.add('lp-active');
+}
+
+function lpShowRegister() {
+  lpHideAllPages();
+  document.querySelectorAll('.lp-panel').forEach(p => p.classList.remove('lp-active'));
+  document.getElementById('lp-register').classList.add('lp-active');
+}
+
+function lpShowForgot() { lpShowForgotPage(); }
 
 /* legacy compat */
 function switchLoginTab(tab) {
@@ -2119,14 +2197,16 @@ function lpStartTimer() {
 }
 
 window.lpSendOTP = function() {
-  const email = document.getElementById('lp-reset-email').value.trim();
-  const errEl = document.getElementById('lp-reset-err');
-  const sucEl = document.getElementById('lp-reset-ok');
-  const btn   = document.getElementById('lp-reset-btn');
+  const emailInput = document.getElementById('lp-reset-email');
+  const errEl      = document.getElementById('lp-reset-err');
+  const sucEl      = document.getElementById('lp-reset-ok');
+  const btn        = document.getElementById('lp-reset-btn');
+  const emailValue = emailInput.value.trim();
+
   errEl.style.display = 'none';
   sucEl.style.display = 'none';
 
-  if (!email) {
+  if (!emailValue) {
     errEl.textContent = 'Please enter your email address.';
     errEl.style.display = 'block';
     return;
@@ -2136,42 +2216,38 @@ window.lpSendOTP = function() {
   btn.innerHTML = '<span class="lp-spinner"></span> Sending...';
 
   otpCode      = lpGenerateOTP();
-  otpUserEmail = email;
+  otpUserEmail = emailValue;
   otpVerified  = false;
 
-  const now     = new Date();
-  const expTime = new Date(now.getTime() + 90000);
-  const timeStr = expTime.toLocaleTimeString();
+  const expTime = new Date(Date.now() + 90000).toLocaleTimeString();
 
   emailjs.send('service_1oz46ba', 'template_nisif2i', {
-    email:    email,
+    email:    emailValue,
     passcode: otpCode,
-    time:     timeStr
+    time:     expTime
   })
   .then(() => {
     btn.innerHTML = 'Send Code'; btn.disabled = false;
-    // show OTP panel
-    document.getElementById('lp-otp-email-display').textContent = email;
-    document.getElementById('lp-otp-err').style.display = 'none';
-    document.getElementById('lp-otp-ok').style.display  = 'none';
+    document.getElementById('lp-otp-email-display').textContent = emailValue;
+    document.getElementById('lp-otp-err').style.display  = 'none';
+    document.getElementById('lp-otp-ok').style.display   = 'none';
     document.getElementById('lp-new-pass').style.display = 'none';
-    document.getElementById('lp-otp-btn').textContent = 'Verify Code';
-    document.getElementById('lp-otp-btn').disabled = false;
-    // clear boxes
+    document.getElementById('lp-otp-btn').textContent    = 'Verify Code';
+    document.getElementById('lp-otp-btn').onclick        = lpVerifyOTP;
+    document.getElementById('lp-otp-btn').disabled       = false;
     for (let i = 0; i < 6; i++) {
       const el = document.getElementById('otp' + i);
-      el.value = '';
-      el.classList.remove('otp-filled');
+      if (el) { el.value = ''; el.classList.remove('otp-filled'); }
     }
-    lpShowOTP();
+    lpShowOTPPage();
     lpStartTimer();
-    setTimeout(() => document.getElementById('otp0').focus(), 300);
+    setTimeout(() => { const o = document.getElementById('otp0'); if(o) o.focus(); }, 300);
   })
   .catch((err) => {
-    errEl.textContent = 'Failed to send code. Please try again.';
+    console.error('EmailJS error:', err);
+    errEl.textContent = 'Failed to send. Check your email and try again.';
     errEl.style.display = 'block';
     btn.innerHTML = 'Send Code'; btn.disabled = false;
-    console.error('EmailJS error:', err);
   });
 };
 
@@ -2249,36 +2325,44 @@ window.lpSaveNewPassword = function() {
   btn.disabled = true;
   btn.innerHTML = '<span class="lp-spinner"></span> Saving...';
 
-  // Update password using Firebase updatePassword
-  updatePassword(auth.currentUser, newPass)
-    .then(() => {
-      sucEl.textContent = '✓ Password updated successfully!';
-      sucEl.style.display = 'block';
-      btn.innerHTML = 'Save New Password'; btn.disabled = false;
-      otpCode = '';
-      setTimeout(() => { lpShowSignin(); }, 2000);
-    })
-    .catch(() => {
-      // If user session expired, send Firebase reset email as fallback
-      sendPasswordResetEmail(auth, otpUserEmail)
-        .then(() => {
-          sucEl.textContent = '✓ A reset link has been sent to your email.';
-          sucEl.style.display = 'block';
-          btn.innerHTML = 'Save New Password'; btn.disabled = false;
-          otpCode = '';
-          setTimeout(() => lpShowSignin(), 2500);
-        })
-        .catch(() => {
-          errEl.textContent = 'Failed to update password. Please try again.';
-          errEl.style.display = 'block';
-          btn.innerHTML = 'Save New Password'; btn.disabled = false;
-        });
-    });
+  const currentUser = window._auth && window._auth.currentUser;
+
+  if (currentUser && window._updatePassword) {
+    window._updatePassword(currentUser, newPass)
+      .then(() => {
+        sucEl.textContent = '✓ Password updated! You can now sign in.';
+        sucEl.style.display = 'block';
+        btn.innerHTML = 'Save New Password'; btn.disabled = false;
+        otpCode = '';
+        setTimeout(() => lpShowSignin(), 2000);
+      })
+      .catch(() => sendResetFallback(errEl, sucEl, btn));
+  } else {
+    sendResetFallback(errEl, sucEl, btn);
+  }
 };
+
+function sendResetFallback(errEl, sucEl, btn) {
+  if (window._sendPasswordResetEmail && window._auth) {
+    window._sendPasswordResetEmail(window._auth, otpUserEmail)
+      .then(() => {
+        sucEl.textContent = '✓ A reset link was sent to your email.';
+        sucEl.style.display = 'block';
+        btn.innerHTML = 'Save New Password'; btn.disabled = false;
+        otpCode = '';
+        setTimeout(() => lpShowSignin(), 2500);
+      })
+      .catch(() => {
+        errEl.textContent = 'Failed. Please try again.';
+        errEl.style.display = 'block';
+        btn.innerHTML = 'Save New Password'; btn.disabled = false;
+      });
+  }
+}
 
 window.lpResendOTP = function() {
   if (!document.getElementById('lp-resend').classList.contains('active')) return;
-  lpShowForgot();
+  lpShowForgotPage();
 };
 
 </script>
@@ -2299,6 +2383,9 @@ const firebaseConfig = {
 
 const app  = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+window._auth = auth;
+window._updatePassword = updatePassword;
+window._sendPasswordResetEmail = sendPasswordResetEmail;
 
 window.register = function () {
   const firstName = document.getElementById("lp-reg-firstname").value.trim();
@@ -2400,36 +2487,4 @@ if (savedEmail) {
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+     
