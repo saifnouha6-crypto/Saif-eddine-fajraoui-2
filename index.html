@@ -1066,303 +1066,228 @@
   @media (min-width: 1400px) {
     .products-grid { max-width: 1400px; gap: 40px; }
   }
-  /* ========== PREMIUM LOGIN POPUP ========== */
+  /* ========== WORLD-CLASS LOGIN — TELETEXT STYLE ========== */
+
+  @keyframes lp-fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes lp-slideup {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Full-screen overlay */
   .login-popup {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.75);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    display: none;
-    justify-content: center;
-    align-items: flex-start;
-    overflow-y: auto;
-    padding: 20px 0 40px;
     z-index: 999999;
-    animation: fadeInOverlay 0.3s ease;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    background: #fff;
+    overflow-y: auto;
+    animation: lp-fadein 0.25s ease;
   }
 
-  @keyframes fadeInOverlay {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  @keyframes slideUpBox {
-    from { opacity: 0; transform: translateY(30px) scale(0.97); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
-
+  /* Wrapper card — full page feel like Teletext */
   .login-box {
-    width: 92%;
-    max-width: 420px;
-    background: #ffffff;
-    border-radius: 0px;
+    width: 100%;
+    max-width: 480px;
+    min-height: 100vh;
+    background: #fff;
     display: flex;
     flex-direction: column;
+    padding: 0;
     position: relative;
-    overflow: hidden;
-    animation: slideUpBox 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+    animation: lp-slideup 0.35s cubic-bezier(0.16,1,0.3,1);
   }
 
-  .login-box-header {
-    background: #111111;
-    color: white;
-    padding: 35px 35px 30px;
-    text-align: center;
-    position: relative;
-  }
-
-  .login-box-header .login-brand {
-    font-size: 22px;
-    font-weight: 900;
-    letter-spacing: 6px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-    color: #ffffff;
-  }
-
-  .login-box-header .login-brand span {
-    color: #c5a880;
-  }
-
-  .login-box-header p {
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-    font-weight: 500;
-  }
-
-  .login-box-body {
-    padding: 35px 35px 30px;
-  }
-
-  /* Tabs */
-  .login-tabs {
-    display: flex;
-    border-bottom: 1px solid #e8e8e8;
-    margin-bottom: 28px;
-    gap: 0;
-  }
-
-  .login-tab {
-    flex: 1;
-    background: none;
-    border: none;
-    padding: 12px 5px;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    cursor: pointer;
-    color: #aaa;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-  }
-
-  .login-tab.active {
-    color: #111;
-    border-bottom-color: #111;
-  }
-
-  .login-tab:hover:not(.active) {
-    color: #555;
-  }
-
-  /* Input Groups */
-  .login-input-group {
-    position: relative;
-    margin-bottom: 16px;
-  }
-
-  .login-input-group label {
-    display: block;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: #888;
-    margin-bottom: 8px;
-  }
-
-  .login-input-group input {
-    width: 100%;
-    padding: 14px 16px 14px 42px;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    outline: none;
-    font-size: 13px;
-    font-family: 'Montserrat', sans-serif;
-    color: #111;
-    background: #fafafa;
-    transition: all 0.3s ease;
-    letter-spacing: 0.5px;
-  }
-
-  .login-input-group input:focus {
-    border-color: #111;
-    background: #fff;
-    box-shadow: 0 0 0 3px rgba(0,0,0,0.04);
-  }
-
-  .login-input-group .input-icon {
-    position: absolute;
-    bottom: 14px;
-    left: 14px;
-    color: #aaa;
-    font-size: 14px;
-    pointer-events: none;
-  }
-
-  /* Buttons */
-  .login-submit-btn {
-    width: 100%;
-    background: #111;
-    color: white;
-    border: none;
-    padding: 16px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 8px;
-    transition: all 0.3s ease;
-  }
-
-  .login-submit-btn:hover {
-    background: #333;
-    transform: translateY(-1px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-  }
-
-  .login-submit-btn:active {
-    transform: translateY(0);
-  }
-
-  .login-divider {
+  /* Top bar inside login — mirrors site header */
+  .lp-topbar {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin: 20px 0;
-    color: #ccc;
-    font-size: 11px;
-    letter-spacing: 1px;
+    justify-content: space-between;
+    padding: 22px 28px;
+    border-bottom: 1px solid #ebebeb;
+  }
+
+  .lp-topbar-brand {
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 5px;
     text-transform: uppercase;
+    color: #111;
+    text-decoration: none;
   }
 
-  .login-divider::before,
-  .login-divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: #e8e8e8;
-  }
-
-  .login-error-msg {
-    display: none;
-    background: #fff5f5;
-    border: 1px solid #fdd;
-    color: #d93838;
-    font-size: 11px;
-    padding: 10px 14px;
-    border-radius: 4px;
-    margin-top: 12px;
-    letter-spacing: 0.5px;
-    text-align: center;
-  }
-
-  .login-success-msg {
-    display: none;
-    background: #f0fff4;
-    border: 1px solid #b7ebc8;
-    color: #27ae60;
-    font-size: 11px;
-    padding: 10px 14px;
-    border-radius: 4px;
-    margin-top: 12px;
-    letter-spacing: 0.5px;
-    text-align: center;
-  }
-
-  /* Tab panels */
-  .login-panel { display: none; }
-  .login-panel.active { display: block; }
-
-  /* Close button */
   .close-login {
-    position: absolute;
-    top: 14px;
-    right: 16px;
+    background: none;
     border: none;
-    background: rgba(255,255,255,0.12);
-    color: white;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    font-size: 16px;
+    font-size: 22px;
+    color: #111;
     cursor: pointer;
+    line-height: 1;
+    padding: 4px;
+    transition: opacity 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
-    line-height: 1;
+  }
+  .close-login:hover { opacity: 0.45; }
+
+  /* Main content area */
+  .lp-content {
+    padding: 48px 40px 40px;
+    flex: 1;
   }
 
-  .close-login:hover {
-    background: rgba(255,255,255,0.25);
-    transform: rotate(90deg);
+  @media (max-width: 480px) {
+    .lp-content { padding: 36px 28px 32px; }
   }
 
-  /* Footer note */
-  .login-footer-note {
+  /* Page title — exactly like Teletext */
+  .lp-title {
+    font-size: 28px;
+    font-weight: 300;
+    color: #999;
     text-align: center;
-    font-size: 10px;
-    color: #bbb;
+    margin-bottom: 40px;
     letter-spacing: 1px;
-    padding: 0 35px 25px;
-    text-transform: uppercase;
   }
 
-  /* Legacy .login-btn hidden — replaced */
-  .login-btn { display: none; }
+  /* Labels */
+  .lp-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #222;
+    margin-bottom: 7px;
+  }
 
-  .account-link {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    color: var(--text-black);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 12px 16px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    background: var(--bg-light);
-    transition: var(--transition-smooth);
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    max-width: 100%;
+  /* Input fields — Teletext style: thin border, no radius */
+  .lp-field {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #c8c8c8;
+    border-radius: 0;
+    outline: none;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    color: #111;
+    background: #fff;
+    transition: border-color 0.2s;
     margin-bottom: 20px;
+    -webkit-appearance: none;
   }
-  .account-link:hover {
-    background: var(--text-black);
-    color: white;
-    border-color: var(--text-black);
+  .lp-field:focus {
+    border-color: #111;
   }
-  .account-link i { flex-shrink: 0; font-size: 14px; }
-  .account-link span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  .lp-field.lp-filled {
+    background: #f0f4ff;
+    border-color: #b0b8d0;
   }
+
+  /* Forgot password link */
+  .lp-forgot {
+    display: block;
+    text-align: center;
+    font-size: 13px;
+    color: #555;
+    text-decoration: none;
+    margin-bottom: 18px;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .lp-forgot:hover { color: #111; }
+
+  /* Sign In button — full black Teletext style */
+  .lp-signin-btn {
+    width: 100%;
+    background: #111;
+    color: #fff;
+    border: none;
+    padding: 17px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    margin-bottom: 22px;
+    transition: background 0.2s;
+    border-radius: 0;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .lp-signin-btn:hover { background: #2a2a2a; }
+  .lp-signin-btn:disabled { background: #888; cursor: not-allowed; }
+
+  /* CREATE ACCOUNT link — all caps, like Teletext */
+  .lp-create-link {
+    display: block;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #111;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 14px 0;
+    transition: opacity 0.2s;
+    border-top: 1px solid #ebebeb;
+    margin-top: 4px;
+  }
+  .lp-create-link:hover { opacity: 0.5; }
+
+  /* Panels — sign in / register */
+  .lp-panel { display: none; }
+  .lp-panel.lp-active { display: block; }
+
+  /* Back link inside register */
+  .lp-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #888;
+    cursor: pointer;
+    margin-bottom: 28px;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .lp-back-link:hover { color: #111; }
+
+  /* Messages */
+  .lp-msg {
+    display: none;
+    font-size: 12px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    letter-spacing: 0.3px;
+    border-radius: 0;
+    text-align: center;
+  }
+  .lp-msg.lp-err  { background:#fff2f2; border:1px solid #f5c2c2; color:#c0392b; }
+  .lp-msg.lp-ok   { background:#f2fff6; border:1px solid #a8e6be; color:#1e8449; }
+
+  /* Loading spinner inside button */
+  .lp-spinner {
+    display: inline-block;
+    width: 14px; height: 14px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: lp-spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+  @keyframes lp-spin { to { transform: rotate(360deg); } }
+
+  /* Legacy — hide old buttons */
+  .login-btn { display: none !important; }
 </style>
 </head>
 <body>
@@ -1458,11 +1383,14 @@
     </ul>
     <div class="sidebar-contact-info">
       <div class="sidebar-account-box">
-        <a href="#" class="account-link" id="loginBtn" onclick="openLoginPopup(); return false;">
-          <i class="fa-solid fa-user"></i>
-          <span id="loginBtnText">Login / Mon Compte</span>
-        </a>
-      </div>
+
+<a href="#" class="account-link" id="loginBtn" onclick="openLoginPopup()">
+    <i class="fa-solid fa-user"></i>
+    <span id="loginBtnText">Login</span>
+
+  </a>
+
+</div>
       <h4>Contact Manager</h4>
       <p>Instagram: <a href="https://www.instagram.com/fajraouisaifeddine?igsh=YWNoZ2F3NjVkZTU0" target="_blank">@fajraouisaifeddine</a></p>
       <p>Phone: <a href="tel:40280174">+216 40 280 174</a></p>
@@ -1927,96 +1855,95 @@ setInterval(changeSlide, 4000);
 
   <div class="login-box">
 
-    <!-- Header -->
-    <div class="login-box-header">
-      <button class="close-login" onclick="closeLoginPopup()">✕</button>
-      <div class="login-brand">FAJRAOUI<span>.</span></div>
-      <p>Espace Client — Member Area</p>
+    <!-- Top bar — mirrors site header -->
+    <div class="lp-topbar">
+      <a class="lp-topbar-brand" href="#" onclick="closeLoginPopup(); return false;">FAJRAOUI</a>
+      <button class="close-login" onclick="closeLoginPopup()" aria-label="Close">✕</button>
     </div>
 
-    <!-- Tabs -->
-    <div class="login-box-body">
+    <!-- Content -->
+    <div class="lp-content">
 
-      <div class="login-tabs">
-        <button class="login-tab active" onclick="switchLoginTab('signin')">Se Connecter</button>
-        <button class="login-tab" onclick="switchLoginTab('register')">Créer un Compte</button>
-      </div>
+      <!-- SIGN IN PANEL -->
+      <div class="lp-panel lp-active" id="lp-signin">
 
-      <!-- Sign In Panel -->
-      <div class="login-panel active" id="panel-signin">
+        <h2 class="lp-title">Login</h2>
 
-        <div class="login-input-group">
-          <label>Adresse Email</label>
-          <i class="fa-solid fa-envelope input-icon"></i>
-          <input type="email" id="email" placeholder="exemple@email.com">
-        </div>
+        <label class="lp-label" for="lp-email">Email</label>
+        <input class="lp-field" type="email" id="lp-email" autocomplete="email" placeholder="">
 
-        <div class="login-input-group">
-          <label>Mot de Passe</label>
-          <i class="fa-solid fa-lock input-icon"></i>
-          <input type="password" id="password" placeholder="••••••••">
-        </div>
+        <label class="lp-label" for="lp-password">Password</label>
+        <input class="lp-field" type="password" id="lp-password" autocomplete="current-password" placeholder="">
 
-        <button class="login-submit-btn" onclick="login()">
-          <i class="fa-solid fa-arrow-right-to-bracket" style="margin-right:8px;"></i> Se Connecter
-        </button>
+        <a class="lp-forgot" onclick="return false;">Forgot your password?</a>
 
-        <div class="login-error-msg" id="signinError"></div>
-        <div class="login-success-msg" id="signinSuccess"></div>
+        <div class="lp-msg lp-err" id="lp-signin-err"></div>
+        <div class="lp-msg lp-ok"  id="lp-signin-ok"></div>
+
+        <button class="lp-signin-btn" id="lp-signin-btn" onclick="lpLogin()">Sign In</button>
+
+        <a class="lp-create-link" onclick="lpShowRegister()">CREATE ACCOUNT</a>
 
       </div>
 
-      <!-- Register Panel -->
-      <div class="login-panel" id="panel-register">
+      <!-- REGISTER PANEL -->
+      <div class="lp-panel" id="lp-register">
 
-        <div class="login-input-group">
-          <label>Adresse Email</label>
-          <i class="fa-solid fa-envelope input-icon"></i>
-          <input type="email" id="emailReg" placeholder="exemple@email.com">
-        </div>
+        <a class="lp-back-link" onclick="lpShowSignin()">← Back to Login</a>
 
-        <div class="login-input-group">
-          <label>Mot de Passe</label>
-          <i class="fa-solid fa-lock input-icon"></i>
-          <input type="password" id="passwordReg" placeholder="Minimum 6 caractères">
-        </div>
+        <h2 class="lp-title">Create Account</h2>
 
-        <button class="login-submit-btn" onclick="register()">
-          <i class="fa-solid fa-user-plus" style="margin-right:8px;"></i> Créer mon Compte
-        </button>
+        <label class="lp-label" for="lp-reg-firstname">First Name</label>
+        <input class="lp-field" type="text" id="lp-reg-firstname" autocomplete="given-name" placeholder="">
 
-        <div class="login-error-msg" id="registerError"></div>
-        <div class="login-success-msg" id="registerSuccess"></div>
+        <label class="lp-label" for="lp-reg-lastname">Last Name</label>
+        <input class="lp-field" type="text" id="lp-reg-lastname" autocomplete="family-name" placeholder="">
+
+        <label class="lp-label" for="lp-reg-email">Email</label>
+        <input class="lp-field" type="email" id="lp-reg-email" autocomplete="email" placeholder="">
+
+        <label class="lp-label" for="lp-reg-password">Password</label>
+        <input class="lp-field" type="password" id="lp-reg-password" autocomplete="new-password" placeholder="Minimum 6 characters">
+
+        <div class="lp-msg lp-err" id="lp-reg-err"></div>
+        <div class="lp-msg lp-ok"  id="lp-reg-ok"></div>
+
+        <button class="lp-signin-btn" id="lp-reg-btn" onclick="lpRegister()">Create</button>
+
+        <a class="lp-create-link" onclick="lpShowSignin()">ALREADY HAVE AN ACCOUNT?</a>
 
       </div>
 
-    </div>
+    </div><!-- /lp-content -->
 
-    <div class="login-footer-note">🔒 Connexion Sécurisée — Données Protégées</div>
+  </div><!-- /login-box -->
 
-  </div>
-
-</div>
+</div><!-- /loginPopup -->
   <script>
 
 function openLoginPopup(){
   document.getElementById("loginPopup").style.display = "flex";
+  document.body.style.overflow = "hidden";
 }
 
 function closeLoginPopup(){
   document.getElementById("loginPopup").style.display = "none";
+  document.body.style.overflow = "";
 }
 
+function lpShowRegister() {
+  document.getElementById('lp-signin').classList.remove('lp-active');
+  document.getElementById('lp-register').classList.add('lp-active');
+}
+
+function lpShowSignin() {
+  document.getElementById('lp-register').classList.remove('lp-active');
+  document.getElementById('lp-signin').classList.add('lp-active');
+}
+
+/* legacy compat */
 function switchLoginTab(tab) {
-  document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.login-panel').forEach(p => p.classList.remove('active'));
-  if (tab === 'signin') {
-    document.querySelectorAll('.login-tab')[0].classList.add('active');
-    document.getElementById('panel-signin').classList.add('active');
-  } else {
-    document.querySelectorAll('.login-tab')[1].classList.add('active');
-    document.getElementById('panel-register').classList.add('active');
-  }
+  if (tab === 'signin') lpShowSignin(); else lpShowRegister();
 }
 
 </script>
@@ -2024,7 +1951,8 @@ function switchLoginTab(tab) {
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAIVlovR5UcXgO3s4QkijzF60rw0O1FeHE",
@@ -2035,90 +1963,120 @@ const firebaseConfig = {
   appId: "1:610890221434:web:9dce27ebaa7201aa03b8c3"
 };
 
-const app = initializeApp(firebaseConfig);
+const app  = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db   = getFirestore(app);
 
 window.register = function () {
-  const email = document.getElementById("emailReg").value;
-  const password = document.getElementById("passwordReg").value;
-  const errEl = document.getElementById("registerError");
-  const sucEl = document.getElementById("registerSuccess");
+  const firstName = document.getElementById("lp-reg-firstname").value.trim();
+  const lastName  = document.getElementById("lp-reg-lastname").value.trim();
+  const email     = document.getElementById("lp-reg-email").value.trim();
+  const password  = document.getElementById("lp-reg-password").value;
+  const errEl     = document.getElementById("lp-reg-err");
+  const sucEl     = document.getElementById("lp-reg-ok");
+  const btn       = document.getElementById("lp-reg-btn");
+
   errEl.style.display = 'none';
   sucEl.style.display = 'none';
+
+  // Validation
+  if (!firstName) { errEl.textContent = 'Please enter your first name.'; errEl.style.display = 'block'; return; }
+  if (!lastName)  { errEl.textContent = 'Please enter your last name.';  errEl.style.display = 'block'; return; }
+  if (!email)     { errEl.textContent = 'Please enter your email.';      errEl.style.display = 'block'; return; }
+  if (!password)  { errEl.textContent = 'Please enter a password.';      errEl.style.display = 'block'; return; }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="lp-spinner"></span> Creating...';
+
   createUserWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      sucEl.innerHTML = '✅ Compte créé avec succès ! Bienvenue.';
+    .then(async (userCredential) => {
+      const user = userCredential.user;
+
+      // Save display name to Firebase Auth
+      await updateProfile(user, { displayName: firstName + ' ' + lastName });
+
+      // Save full profile to Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        firstName: firstName,
+        lastName:  lastName,
+        email:     email,
+        createdAt: new Date().toISOString()
+      });
+
+      // Update header button
+      localStorage.setItem("userEmail", email);
+      localStorage.setItem("userDisplayName", firstName + ' ' + lastName);
+      const btnText = document.getElementById("loginBtnText");
+      if (btnText) btnText.innerText = firstName;
+
+      sucEl.textContent = 'Welcome, ' + firstName + '! Your account has been created.';
       sucEl.style.display = 'block';
+      btn.innerHTML = 'Create'; btn.disabled = false;
       setTimeout(() => closeLoginPopup(), 2000);
     })
     .catch((error) => {
-      errEl.innerHTML = '⚠️ ' + (error.code === 'auth/email-already-in-use' ? 'Email déjà utilisé.' : error.message);
+      const msgs = {
+        'auth/email-already-in-use': 'This email is already registered. Please sign in.',
+        'auth/invalid-email':        'Please enter a valid email address.',
+        'auth/weak-password':        'Password must be at least 6 characters.'
+      };
+      errEl.textContent = msgs[error.code] || error.message;
       errEl.style.display = 'block';
+      btn.innerHTML = 'Create'; btn.disabled = false;
     });
 };
+window.lpRegister = window.register;
 
 window.login = function () {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  const errEl = document.getElementById("signinError");
-  const sucEl = document.getElementById("signinSuccess");
+  const email    = document.getElementById("lp-email").value.trim();
+  const password = document.getElementById("lp-password").value;
+  const errEl    = document.getElementById("lp-signin-err");
+  const sucEl    = document.getElementById("lp-signin-ok");
+  const btn      = document.getElementById("lp-signin-btn");
   errEl.style.display = 'none';
   sucEl.style.display = 'none';
+  btn.disabled = true;
+  btn.innerHTML = '<span class="lp-spinner"></span> Signing in...';
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
+      const displayName = user.displayName || email;
+      const firstName   = displayName.split(' ')[0];
       localStorage.setItem("userEmail", user.email);
-      document.getElementById("loginBtnText").innerText = user.email;
-      sucEl.innerHTML = '✅ Connexion réussie ! Bienvenue.';
+      localStorage.setItem("userDisplayName", displayName);
+      const btnText = document.getElementById("loginBtnText");
+      if (btnText) btnText.innerText = firstName;
+      sucEl.textContent = 'Welcome back, ' + firstName + '!';
       sucEl.style.display = 'block';
-      setTimeout(() => closeLoginPopup(), 1500);
+      btn.innerHTML = 'Sign In'; btn.disabled = false;
+      setTimeout(() => closeLoginPopup(), 1200);
     })
     .catch((error) => {
-      errEl.innerHTML = '⚠️ ' + (error.code === 'auth/invalid-credential' ? 'Email ou mot de passe incorrect.' : error.message);
+      const msgs = {
+        'auth/invalid-credential': 'Incorrect email or password.',
+        'auth/user-not-found':     'No account found. Please create an account first.',
+        'auth/wrong-password':     'Incorrect password.',
+        'auth/invalid-email':      'Please enter a valid email address.'
+      };
+      errEl.textContent = msgs[error.code] || 'Sign in failed. Please try again.';
       errEl.style.display = 'block';
+      btn.innerHTML = 'Sign In'; btn.disabled = false;
     });
 };
+window.lpLogin = window.login;
 
 const savedEmail = localStorage.getItem("userEmail");
+const savedName  = localStorage.getItem("userDisplayName");
 if (savedEmail) {
   document.addEventListener("DOMContentLoaded", function() {
     const btn = document.getElementById("loginBtnText");
-    if (btn) btn.innerText = savedEmail;
+    if (btn) btn.innerText = savedName ? savedName.split(' ')[0] : savedEmail;
   });
 }
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
