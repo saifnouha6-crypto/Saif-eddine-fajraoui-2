@@ -1966,63 +1966,6 @@ setInterval(changeSlide, 4000);
 
       </div>
 
-      <!-- FORGOT PASSWORD — STEP 1: Enter Email -->
-      <div class="lp-panel" id="lp-forgot">
-
-        <a class="lp-back-link" onclick="lpShowSignin()">← Back to Login</a>
-
-        <h2 class="lp-title">Reset Password</h2>
-
-        <p class="lp-forgot-note">Enter your email and we'll send you a 6-digit verification code.</p>
-
-        <label class="lp-label" for="lp-reset-email">Email</label>
-        <input class="lp-field" type="email" id="lp-reset-email" autocomplete="email" placeholder="">
-
-        <div class="lp-msg lp-err" id="lp-reset-err"></div>
-        <div class="lp-msg lp-ok"  id="lp-reset-ok"></div>
-
-        <button class="lp-signin-btn" id="lp-reset-btn" onclick="lpSendOTP()">Send Code</button>
-
-        <a class="lp-create-link" onclick="lpShowSignin()">BACK TO LOGIN</a>
-
-      </div>
-
-      <!-- FORGOT PASSWORD — STEP 2: Enter OTP + New Password -->
-      <div class="lp-panel" id="lp-otp">
-
-        <a class="lp-back-link" onclick="lpShowForgot()">← Change Email</a>
-
-        <h2 class="lp-title">Enter Code</h2>
-
-        <p class="lp-otp-info">We sent a 6-digit code to<br><strong id="lp-otp-email-display"></strong></p>
-
-        <div class="lp-otp-inputs">
-          <input type="number" maxlength="1" class="otp-box" id="otp0" oninput="otpMove(this,0)">
-          <input type="number" maxlength="1" class="otp-box" id="otp1" oninput="otpMove(this,1)">
-          <input type="number" maxlength="1" class="otp-box" id="otp2" oninput="otpMove(this,2)">
-          <input type="number" maxlength="1" class="otp-box" id="otp3" oninput="otpMove(this,3)">
-          <input type="number" maxlength="1" class="otp-box" id="otp4" oninput="otpMove(this,4)">
-          <input type="number" maxlength="1" class="otp-box" id="otp5" oninput="otpMove(this,5)">
-        </div>
-
-        <div class="lp-timer" id="lp-timer">Code expires in <span id="lp-timer-val">1:30</span></div>
-
-        <div class="lp-new-pass" id="lp-new-pass">
-          <label class="lp-label" for="lp-new-password">New Password</label>
-          <input class="lp-field" type="password" id="lp-new-password" placeholder="Minimum 6 characters">
-          <label class="lp-label" for="lp-confirm-password">Confirm Password</label>
-          <input class="lp-field" type="password" id="lp-confirm-password" placeholder="Repeat password">
-        </div>
-
-        <div class="lp-msg lp-err" id="lp-otp-err"></div>
-        <div class="lp-msg lp-ok"  id="lp-otp-ok"></div>
-
-        <button class="lp-signin-btn" id="lp-otp-btn" onclick="lpVerifyOTP()">Verify Code</button>
-
-        <a class="lp-resend" id="lp-resend" onclick="lpResendOTP()">RESEND CODE</a>
-
-      </div>
-
       <!-- REGISTER PANEL -->
       <div class="lp-panel" id="lp-register">
 
@@ -2196,10 +2139,11 @@ function lpStartTimer() {
 }
 
 window.lpSendOTP = function() {
-  const emailInput = document.getElementById('lp-reset-email');
-  const errEl      = document.getElementById('lp-reset-err');
-  const sucEl      = document.getElementById('lp-reset-ok');
-  const btn        = document.getElementById('lp-reset-btn');
+  const page       = document.getElementById('lp-forgot-page');
+  const emailInput = page.querySelector('input[type="email"]');
+  const errEl      = page.querySelector('.lp-err');
+  const sucEl      = page.querySelector('.lp-ok');
+  const btn        = page.querySelector('button');
   const emailValue = emailInput.value.trim();
 
   errEl.style.display = 'none';
@@ -2211,7 +2155,6 @@ window.lpSendOTP = function() {
     return;
   }
 
-  // تحقق أن EmailJS محمّل
   if (typeof emailjs === 'undefined') {
     errEl.textContent = 'Service not ready. Please refresh the page.';
     errEl.style.display = 'block';
@@ -2493,6 +2436,11 @@ if (savedEmail) {
 
 </body>
 </html>
+
+
+
+
+
 
 
 
