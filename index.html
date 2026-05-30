@@ -2194,7 +2194,7 @@ window.lpSendOTP = function() {
   })
   .catch((err) => {
     console.error('EmailJS error:', err);
-    errEl.textContent = 'Failed to send. Check your email and try again.';
+    errEl.textContent = 'Error: ' + (err.text || err.message || JSON.stringify(err));
     errEl.style.display = 'block';
     btn.innerHTML = 'Send Code'; btn.disabled = false;
   });
@@ -2436,6 +2436,12 @@ if (savedEmail) {
 
 </body>
 </html>
+
+
+
+
+
+
 
 
 
