@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
 <head>
@@ -1952,7 +1953,6 @@ function switchLoginTab(tab) {
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAIVlovR5UcXgO3s4QkijzF60rw0O1FeHE",
@@ -1965,7 +1965,6 @@ const firebaseConfig = {
 
 const app  = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db   = getFirestore(app);
 
 window.register = function () {
   const firstName = document.getElementById("lp-reg-firstname").value.trim();
@@ -1979,7 +1978,6 @@ window.register = function () {
   errEl.style.display = 'none';
   sucEl.style.display = 'none';
 
-  // Validation
   if (!firstName) { errEl.textContent = 'Please enter your first name.'; errEl.style.display = 'block'; return; }
   if (!lastName)  { errEl.textContent = 'Please enter your last name.';  errEl.style.display = 'block'; return; }
   if (!email)     { errEl.textContent = 'Please enter your email.';      errEl.style.display = 'block'; return; }
@@ -1989,30 +1987,19 @@ window.register = function () {
   btn.innerHTML = '<span class="lp-spinner"></span> Creating...';
 
   createUserWithEmailAndPassword(auth, email, password)
-    .then(async (userCredential) => {
+    .then((userCredential) => {
       const user = userCredential.user;
-
-      // Save display name to Firebase Auth
-      await updateProfile(user, { displayName: firstName + ' ' + lastName });
-
-      // Save full profile to Firestore
-      await setDoc(doc(db, "users", user.uid), {
-        firstName: firstName,
-        lastName:  lastName,
-        email:     email,
-        createdAt: new Date().toISOString()
-      });
-
-      // Update header button
-      localStorage.setItem("userEmail", email);
-      localStorage.setItem("userDisplayName", firstName + ' ' + lastName);
-      const btnText = document.getElementById("loginBtnText");
-      if (btnText) btnText.innerText = firstName;
-
-      sucEl.textContent = 'Welcome, ' + firstName + '! Your account has been created.';
-      sucEl.style.display = 'block';
-      btn.innerHTML = 'Create'; btn.disabled = false;
-      setTimeout(() => closeLoginPopup(), 2000);
+      return updateProfile(user, { displayName: firstName + ' ' + lastName })
+        .then(() => {
+          localStorage.setItem("userEmail", email);
+          localStorage.setItem("userDisplayName", firstName + ' ' + lastName);
+          const btnText = document.getElementById("loginBtnText");
+          if (btnText) btnText.innerText = firstName;
+          sucEl.textContent = 'Welcome, ' + firstName + '! Your account has been created.';
+          sucEl.style.display = 'block';
+          btn.innerHTML = 'Create'; btn.disabled = false;
+          setTimeout(() => closeLoginPopup(), 2000);
+        });
     })
     .catch((error) => {
       const msgs = {
@@ -2077,6 +2064,11 @@ if (savedEmail) {
 
 </body>
 </html>
+
+
+
+
+
 
 
 
