@@ -2278,7 +2278,7 @@ window.lpSaveNewPassword = function() {
   hashPassword(newPass).then(async (hashedPass) => {
     const userId  = emailToId(otpUserEmail);
     const userRef = doc(db, 'users', userId);
-    await updateDoc(userRef, { password: hashedPass });
+    await setDoc(userRef, { password: hashedPass, email: otpUserEmail }, { merge: true });
     sucEl.textContent = '✓ Password updated! You can now sign in.';
     sucEl.style.display = 'block';
     btn.innerHTML = 'Save New Password'; btn.disabled = false;
@@ -2442,6 +2442,12 @@ window.lpResetPassword = window.lpSendOTP;
 
 </body>
 </html>
+
+
+
+
+
+
 
 
 
