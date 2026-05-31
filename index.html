@@ -2249,7 +2249,7 @@ window.lpVerifyOTP = function() {
   sucEl.style.display = 'block';
   document.getElementById('lp-new-pass').style.display = 'block';
   document.getElementById('lp-otp-btn').textContent = 'Save New Password';
-  document.getElementById('lp-otp-btn').onclick = lpSaveNewPassword;
+  document.getElementById('lp-otp-btn').setAttribute('onclick', 'lpSaveNewPassword()');
 };
 
 window.lpSaveNewPassword = function() {
@@ -2443,6 +2443,12 @@ window.lpResetPassword = window.lpSendOTP;
 
 </body>
 </html>
+
+
+
+
+
+
 
 
 
