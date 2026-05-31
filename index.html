@@ -2284,7 +2284,8 @@ window.lpSaveNewPassword = function() {
     btn.innerHTML = 'Save New Password'; btn.disabled = false;
     otpCode = '';
     setTimeout(() => lpShowSignin(), 2000);
-  }).catch(() => {
+  }).catch((err) => {
+    alert('Firestore error: ' + (err.message || JSON.stringify(err)));
     errEl.textContent = 'Failed to update. Please try again.';
     errEl.style.display = 'block';
     btn.innerHTML = 'Save New Password'; btn.disabled = false;
@@ -2495,4 +2496,17 @@ window.lpResetPassword = window.lpSendOTP;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
      
+m
