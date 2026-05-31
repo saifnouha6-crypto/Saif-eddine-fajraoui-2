@@ -2245,12 +2245,22 @@ window.lpVerifyOTP = function() {
   clearInterval(otpTimer);
   otpVerified = true;
 
-  // show new password fields
-  sucEl.textContent = '✓ Code verified! Enter your new password.';
+  // إخفاء حقول كلمة المرور — نرسل reset link مباشرة
+  sucEl.textContent = '✓ Code verified! Sending password reset link to your email...';
   sucEl.style.display = 'block';
-  document.getElementById('lp-new-pass').style.display = 'block';
-  document.getElementById('lp-otp-btn').textContent = 'Save New Password';
-  document.getElementById('lp-otp-btn').onclick = lpSaveNewPassword;
+  document.getElementById('lp-new-pass').style.display = 'none';
+  document.getElementById('lp-otp-btn').style.display = 'none';
+
+  // إرسال Firebase reset email تلقائياً
+  sendPasswordResetEmail(auth, otpUserEmail)
+    .then(() => {
+      sucEl.textContent = '✓ Reset link sent to ' + otpUserEmail + ' — Check your inbox!';
+      otpCode = '';
+      setTimeout(() => lpShowSignin(), 3500);
+    })
+    .catch(() => {
+      sucEl.textContent = '✓ Code verified! Please use Forgot Password again to reset.';
+    });
 };
 
 window.lpSaveNewPassword = function() {
@@ -2260,6 +2270,7 @@ window.lpSaveNewPassword = function() {
   const sucEl    = document.getElementById('lp-otp-ok');
   const btn      = document.getElementById('lp-otp-btn');
   errEl.style.display = 'none';
+  sucEl.style.display = 'none';
 
   if (!newPass || newPass.length < 6) {
     errEl.textContent = 'Password must be at least 6 characters.';
@@ -2275,40 +2286,22 @@ window.lpSaveNewPassword = function() {
   btn.disabled = true;
   btn.innerHTML = '<span class="lp-spinner"></span> Saving...';
 
-  const currentUser = window._auth && window._auth.currentUser;
-
-  if (currentUser && window._updatePassword) {
-    window._updatePassword(currentUser, newPass)
-      .then(() => {
-        sucEl.textContent = '✓ Password updated! You can now sign in.';
-        sucEl.style.display = 'block';
-        btn.innerHTML = 'Save New Password'; btn.disabled = false;
-        otpCode = '';
-        setTimeout(() => lpShowSignin(), 2000);
-      })
-      .catch(() => sendResetFallback(errEl, sucEl, btn));
-  } else {
-    sendResetFallback(errEl, sucEl, btn);
-  }
+  // نحتاج كلمة المرور القديمة لتسجيل الدخول أولاً
+  // الحل: نرسل Firebase reset email وننبه المستخدم
+  sendPasswordResetEmail(auth, otpUserEmail)
+    .then(() => {
+      sucEl.textContent = '✓ Check your email for a reset link to set your new password.';
+      sucEl.style.display = 'block';
+      btn.innerHTML = 'Save New Password'; btn.disabled = false;
+      otpCode = '';
+      setTimeout(() => lpShowSignin(), 3000);
+    })
+    .catch(() => {
+      errEl.textContent = 'Failed. Please try again.';
+      errEl.style.display = 'block';
+      btn.innerHTML = 'Save New Password'; btn.disabled = false;
+    });
 };
-
-function sendResetFallback(errEl, sucEl, btn) {
-  if (window._sendPasswordResetEmail && window._auth) {
-    window._sendPasswordResetEmail(window._auth, otpUserEmail)
-      .then(() => {
-        sucEl.textContent = '✓ A reset link was sent to your email.';
-        sucEl.style.display = 'block';
-        btn.innerHTML = 'Save New Password'; btn.disabled = false;
-        otpCode = '';
-        setTimeout(() => lpShowSignin(), 2500);
-      })
-      .catch(() => {
-        errEl.textContent = 'Failed. Please try again.';
-        errEl.style.display = 'block';
-        btn.innerHTML = 'Save New Password'; btn.disabled = false;
-      });
-  }
-}
 
 window.lpResendOTP = function() {
   if (!document.getElementById('lp-resend').classList.contains('active')) return;
@@ -2437,6 +2430,12 @@ if (savedEmail) {
 
 </body>
 </html>
+
+
+
+
+
+
 
 
 
