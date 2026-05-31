@@ -2276,10 +2276,15 @@ window.lpSaveNewPassword = function() {
   btn.disabled = true;
   btn.innerHTML = '<span class="lp-spinner"></span> Saving...';
 
-  hashPassword(newPass).then(async (hashedPass) => {
-    const userId  = emailToId(otpUserEmail);
-    const userRef = doc(db, 'users', userId);
-    await setDoc(userRef, { password: hashedPass, email: otpUserEmail }, { merge: true });
+  (window._hashPassword || hashPassword)(newPass).then(async (hashedPass) => {
+    if (!window._db || !window._doc || !window._setDoc) {
+      alert('Database not ready. Please refresh.');
+      btn.innerHTML = 'Save New Password'; btn.disabled = false;
+      return;
+    }
+    const userId  = window._emailToId(otpUserEmail);
+    const userRef = window._doc(window._db, 'users', userId);
+    await window._setDoc(userRef, { password: hashedPass, email: otpUserEmail }, { merge: true });
     sucEl.textContent = '✓ Password updated! You can now sign in.';
     sucEl.style.display = 'block';
     btn.innerHTML = 'Save New Password'; btn.disabled = false;
@@ -2317,17 +2322,25 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
 
+// Export to window for non-module scripts
+window._db      = db;
+window._doc     = doc;
+window._setDoc  = setDoc;
+window._getDoc  = getDoc;
+
 // Hash password with SHA-256
 async function hashPassword(password) {
   const msgBuffer = new TextEncoder().encode(password);
   const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
   return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2,'0')).join('');
 }
+window._hashPassword = hashPassword;
 
-// Get user email as Firestore doc ID (replace @ and .)
+// Get user email as Firestore doc ID
 function emailToId(email) {
   return email.toLowerCase().replace(/[@.]/g, '_');
 }
+window._emailToId = emailToId;
 
 // Check if logged in from localStorage
 function checkLoggedIn() {
@@ -2444,6 +2457,12 @@ window.lpResetPassword = window.lpSendOTP;
 
 </body>
 </html>
+
+
+
+
+
+
 
 
 
