@@ -2032,6 +2032,7 @@ setInterval(changeSlide, 4000);
       <div class="lp-msg lp-err" id="lp-otp-err"></div>
       <div class="lp-msg lp-ok"  id="lp-otp-ok"></div>
       <button class="lp-signin-btn" id="lp-otp-btn" onclick="lpVerifyOTP()">Verify Code</button>
+      <button class="lp-signin-btn" id="lp-save-btn" onclick="lpSaveNewPassword()" style="display:none;">Save New Password</button>
       <a class="lp-resend" id="lp-resend" onclick="lpResendOTP()">RESEND CODE</a>
     </div>
 
@@ -2248,8 +2249,8 @@ window.lpVerifyOTP = function() {
   sucEl.textContent = '✓ Code verified! Enter your new password.';
   sucEl.style.display = 'block';
   document.getElementById('lp-new-pass').style.display = 'block';
-  document.getElementById('lp-otp-btn').textContent = 'Save New Password';
-  document.getElementById('lp-otp-btn').setAttribute('onclick', 'lpSaveNewPassword()');
+  document.getElementById('lp-otp-btn').style.display = 'none';
+  document.getElementById('lp-save-btn').style.display = 'block';
 };
 
 window.lpSaveNewPassword = function() {
@@ -2257,7 +2258,7 @@ window.lpSaveNewPassword = function() {
   const confPass = document.getElementById('lp-confirm-password').value;
   const errEl    = document.getElementById('lp-otp-err');
   const sucEl    = document.getElementById('lp-otp-ok');
-  const btn      = document.getElementById('lp-otp-btn');
+  const btn      = document.getElementById('lp-save-btn');
   errEl.style.display = 'none';
   sucEl.style.display = 'none';
 
@@ -2448,71 +2449,3 @@ window.lpResetPassword = window.lpSendOTP;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     
-m
