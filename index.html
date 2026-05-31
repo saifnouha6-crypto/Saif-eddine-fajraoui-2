@@ -2245,22 +2245,11 @@ window.lpVerifyOTP = function() {
   clearInterval(otpTimer);
   otpVerified = true;
 
-  // إخفاء حقول كلمة المرور — نرسل reset link مباشرة
-  sucEl.textContent = '✓ Code verified! Sending password reset link to your email...';
+  sucEl.textContent = '✓ Code verified! Enter your new password.';
   sucEl.style.display = 'block';
-  document.getElementById('lp-new-pass').style.display = 'none';
-  document.getElementById('lp-otp-btn').style.display = 'none';
-
-  // إرسال Firebase reset email تلقائياً
-  sendPasswordResetEmail(auth, otpUserEmail)
-    .then(() => {
-      sucEl.textContent = '✓ Reset link sent to ' + otpUserEmail + ' — Check your inbox!';
-      otpCode = '';
-      setTimeout(() => lpShowSignin(), 3500);
-    })
-    .catch(() => {
-      sucEl.textContent = '✓ Code verified! Please use Forgot Password again to reset.';
-    });
+  document.getElementById('lp-new-pass').style.display = 'block';
+  document.getElementById('lp-otp-btn').textContent = 'Save New Password';
+  document.getElementById('lp-otp-btn').onclick = lpSaveNewPassword;
 };
 
 window.lpSaveNewPassword = function() {
@@ -2286,21 +2275,20 @@ window.lpSaveNewPassword = function() {
   btn.disabled = true;
   btn.innerHTML = '<span class="lp-spinner"></span> Saving...';
 
-  // نحتاج كلمة المرور القديمة لتسجيل الدخول أولاً
-  // الحل: نرسل Firebase reset email وننبه المستخدم
-  sendPasswordResetEmail(auth, otpUserEmail)
-    .then(() => {
-      sucEl.textContent = '✓ Check your email for a reset link to set your new password.';
-      sucEl.style.display = 'block';
-      btn.innerHTML = 'Save New Password'; btn.disabled = false;
-      otpCode = '';
-      setTimeout(() => lpShowSignin(), 3000);
-    })
-    .catch(() => {
-      errEl.textContent = 'Failed. Please try again.';
-      errEl.style.display = 'block';
-      btn.innerHTML = 'Save New Password'; btn.disabled = false;
-    });
+  hashPassword(newPass).then(async (hashedPass) => {
+    const userId  = emailToId(otpUserEmail);
+    const userRef = doc(db, 'users', userId);
+    await updateDoc(userRef, { password: hashedPass });
+    sucEl.textContent = '✓ Password updated! You can now sign in.';
+    sucEl.style.display = 'block';
+    btn.innerHTML = 'Save New Password'; btn.disabled = false;
+    otpCode = '';
+    setTimeout(() => lpShowSignin(), 2000);
+  }).catch(() => {
+    errEl.textContent = 'Failed to update. Please try again.';
+    errEl.style.display = 'block';
+    btn.innerHTML = 'Save New Password'; btn.disabled = false;
+  });
 };
 
 window.lpResendOTP = function() {
@@ -2313,7 +2301,7 @@ window.lpResendOTP = function() {
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, sendPasswordResetEmail, updatePassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAIVlovR5UcXgO3s4QkijzF60rw0O1FeHE",
@@ -2324,12 +2312,32 @@ const firebaseConfig = {
   appId: "1:610890221434:web:9dce27ebaa7201aa03b8c3"
 };
 
-const app  = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-window._auth = auth;
-window._updatePassword = updatePassword;
-window._sendPasswordResetEmail = sendPasswordResetEmail;
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
 
+// Hash password with SHA-256
+async function hashPassword(password) {
+  const msgBuffer = new TextEncoder().encode(password);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+// Get user email as Firestore doc ID (replace @ and .)
+function emailToId(email) {
+  return email.toLowerCase().replace(/[@.]/g, '_');
+}
+
+// Check if logged in from localStorage
+function checkLoggedIn() {
+  const user = JSON.parse(localStorage.getItem('fajraoui_user') || 'null');
+  if (user) {
+    const btn = document.getElementById('loginBtnText');
+    if (btn) btn.innerText = user.firstName || user.email;
+  }
+}
+checkLoggedIn();
+
+// ========== REGISTER ==========
 window.register = function () {
   const firstName = document.getElementById("lp-reg-firstname").value.trim();
   const lastName  = document.getElementById("lp-reg-lastname").value.trim();
@@ -2345,91 +2353,101 @@ window.register = function () {
   if (!firstName) { errEl.textContent = 'Please enter your first name.'; errEl.style.display = 'block'; return; }
   if (!lastName)  { errEl.textContent = 'Please enter your last name.';  errEl.style.display = 'block'; return; }
   if (!email)     { errEl.textContent = 'Please enter your email.';      errEl.style.display = 'block'; return; }
-  if (!password)  { errEl.textContent = 'Please enter a password.';      errEl.style.display = 'block'; return; }
+  if (!password || password.length < 6) { errEl.textContent = 'Password must be at least 6 characters.'; errEl.style.display = 'block'; return; }
 
   btn.disabled = true;
   btn.innerHTML = '<span class="lp-spinner"></span> Creating...';
 
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      return updateProfile(user, { displayName: firstName + ' ' + lastName })
-        .then(() => {
-          localStorage.setItem("userEmail", email);
-          localStorage.setItem("userDisplayName", firstName + ' ' + lastName);
-          const btnText = document.getElementById("loginBtnText");
-          if (btnText) btnText.innerText = firstName;
-          sucEl.textContent = 'Welcome, ' + firstName + '! Your account has been created.';
-          sucEl.style.display = 'block';
-          btn.innerHTML = 'Create'; btn.disabled = false;
-          setTimeout(() => closeLoginPopup(), 2000);
-        });
-    })
-    .catch((error) => {
-      const msgs = {
-        'auth/email-already-in-use': 'This email is already registered. Please sign in.',
-        'auth/invalid-email':        'Please enter a valid email address.',
-        'auth/weak-password':        'Password must be at least 6 characters.'
-      };
-      errEl.textContent = msgs[error.code] || error.message;
+  hashPassword(password).then(async (hashedPass) => {
+    const userId = emailToId(email);
+    const userRef = doc(db, 'users', userId);
+    const existing = await getDoc(userRef);
+    if (existing.exists()) {
+      errEl.textContent = 'This email is already registered.';
       errEl.style.display = 'block';
       btn.innerHTML = 'Create'; btn.disabled = false;
+      return;
+    }
+    await setDoc(userRef, {
+      firstName, lastName, email,
+      password: hashedPass,
+      createdAt: new Date().toISOString()
     });
+    const user = { firstName, lastName, email };
+    localStorage.setItem('fajraoui_user', JSON.stringify(user));
+    const btnText = document.getElementById('loginBtnText');
+    if (btnText) btnText.innerText = firstName;
+    sucEl.textContent = 'Welcome, ' + firstName + '! Account created successfully.';
+    sucEl.style.display = 'block';
+    btn.innerHTML = 'Create'; btn.disabled = false;
+    setTimeout(() => closeLoginPopup(), 2000);
+  }).catch(() => {
+    errEl.textContent = 'Something went wrong. Please try again.';
+    errEl.style.display = 'block';
+    btn.innerHTML = 'Create'; btn.disabled = false;
+  });
 };
 window.lpRegister = window.register;
 
+// ========== LOGIN ==========
 window.login = function () {
   const email    = document.getElementById("lp-email").value.trim();
   const password = document.getElementById("lp-password").value;
   const errEl    = document.getElementById("lp-signin-err");
   const sucEl    = document.getElementById("lp-signin-ok");
   const btn      = document.getElementById("lp-signin-btn");
+
   errEl.style.display = 'none';
   sucEl.style.display = 'none';
   btn.disabled = true;
   btn.innerHTML = '<span class="lp-spinner"></span> Signing in...';
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      const displayName = user.displayName || email;
-      const firstName   = displayName.split(' ')[0];
-      localStorage.setItem("userEmail", user.email);
-      localStorage.setItem("userDisplayName", displayName);
-      const btnText = document.getElementById("loginBtnText");
-      if (btnText) btnText.innerText = firstName;
-      sucEl.textContent = 'Welcome back, ' + firstName + '!';
-      sucEl.style.display = 'block';
-      btn.innerHTML = 'Sign In'; btn.disabled = false;
-      setTimeout(() => closeLoginPopup(), 1200);
-    })
-    .catch((error) => {
-      const msgs = {
-        'auth/invalid-credential': 'Incorrect email or password.',
-        'auth/user-not-found':     'No account found. Please create an account first.',
-        'auth/wrong-password':     'Incorrect password.',
-        'auth/invalid-email':      'Please enter a valid email address.'
-      };
-      errEl.textContent = msgs[error.code] || 'Sign in failed. Please try again.';
+
+  hashPassword(password).then(async (hashedPass) => {
+    const userId = emailToId(email);
+    const userRef = doc(db, 'users', userId);
+    const userSnap = await getDoc(userRef);
+    if (!userSnap.exists()) {
+      errEl.textContent = 'No account found. Please create an account first.';
       errEl.style.display = 'block';
       btn.innerHTML = 'Sign In'; btn.disabled = false;
-    });
+      return;
+    }
+    const userData = userSnap.data();
+    if (userData.password !== hashedPass) {
+      errEl.textContent = 'Incorrect email or password.';
+      errEl.style.display = 'block';
+      btn.innerHTML = 'Sign In'; btn.disabled = false;
+      return;
+    }
+    const user = { firstName: userData.firstName, lastName: userData.lastName, email };
+    localStorage.setItem('fajraoui_user', JSON.stringify(user));
+    const btnText = document.getElementById('loginBtnText');
+    if (btnText) btnText.innerText = userData.firstName || email;
+    sucEl.textContent = 'Welcome back, ' + userData.firstName + '!';
+    sucEl.style.display = 'block';
+    btn.innerHTML = 'Sign In'; btn.disabled = false;
+    setTimeout(() => closeLoginPopup(), 1200);
+  }).catch(() => {
+    errEl.textContent = 'Sign in failed. Please try again.';
+    errEl.style.display = 'block';
+    btn.innerHTML = 'Sign In'; btn.disabled = false;
+  });
 };
 window.lpLogin = window.login;
 
-window.lpResetPassword = window.lpSendOTP; // legacy compat
 
-const savedEmail = localStorage.getItem("userEmail");
-const savedName  = localStorage.getItem("userDisplayName");
-if (savedEmail) {
-  document.addEventListener("DOMContentLoaded", function() {
-    const btn = document.getElementById("loginBtnText");
-    if (btn) btn.innerText = savedName ? savedName.split(' ')[0] : savedEmail;
-  });
-}
+window.lpResetPassword = window.lpSendOTP;
+
 </script>
 
 </body>
 </html>
+
+
+
+
+
+
 
 
 
